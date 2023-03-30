@@ -32,3 +32,28 @@
     transform: translateY(-50%);
     left: 15%
 }
+
+.mySlides h3{
+    font-weight: 500;
+}
+
+.heading-img {
+    background: url('img/banner01.jpg') top center / cover no-repeat;
+    padding-top: 20%;
+    position: relative;
+}
+
+.heading-img h3 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 40px;
+    color: white;
+    font-weight: 500;
+}
+
+.room {
+    margin: 100px 0;
+}
