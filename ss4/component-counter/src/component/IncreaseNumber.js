@@ -9,8 +9,9 @@ function IncreaseNumber() {
   };
 
   const handleIncreaseTwoUnit = () => {
-    setCount2((prev) => prev + 1);
-    setCount2((prev) => prev + 1);
+    // setCount2((prev) => prev + 1);
+    // setCount2((prev) => prev + 1);
+    setCount2(count2 + 2)
   };
 
   return (
