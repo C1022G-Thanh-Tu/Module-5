@@ -6,9 +6,7 @@ import FacilitiesList from './component/FacilitiesList';
 function App() {
   return (
     <>
-      <Headers />
-      <Footer />
-      <FacilitiesList />
+      
     </>
   );
 }
