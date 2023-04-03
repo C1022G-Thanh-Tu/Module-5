@@ -25,7 +25,6 @@ class AddComponent extends Component {
   }
 
   render() {
-    let stt = 1;
     return (
       <>
         <div className="text-center">
@@ -53,7 +52,7 @@ class AddComponent extends Component {
             <tbody>
                 {this.state.todoList.map((value, index) => (
                     <tr key={index}>
-                        <td>{stt++}</td>
+                        <td>{++index}</td>
                         <td>{value}</td>
                     </tr>
                 ))}
