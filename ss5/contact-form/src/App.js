@@ -1,9 +1,9 @@
 import './App.css';
-import SelectCar from './component/SelectCar';
+import ContactForm from './component/ContactForm';
 
 function App() {
   return (
-    <SelectCar />
+    <ContactForm />
   );
 }
 
