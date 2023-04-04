@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <>
-      <footer className="footer-05" style="background-color: #046056;">
+      <footer className="footer-05" style={{backgroundColor: '#046056'}}>
         <div className="container">
           <div className="row border-bottom mb-5 pb-4 align-items-center">
             <div className="col-md-6 mb-md-0 mb-4 text-md-right">
@@ -87,7 +87,7 @@ function Footer() {
               <div className="block-21 mb-4 d-flex">
                 <a
                   className="img mr-4 rounded"
-                  style="background-image: url(images/image_1.jpg);"
+                  style={{backgroundImage: 'url(images/image_1.jpg)'}}
                 ></a>
                 <div className="text">
                   <h3 className="heading">
@@ -117,7 +117,7 @@ function Footer() {
               <div className="block-21 mb-4 d-flex">
                 <a
                   className="img mr-4 rounded"
-                  style="background-image: url(images/image_2.jpg);"
+                  style={{backgroundImage: 'url(images/image_2.jpg)'}}
                 ></a>
                 <div className="text">
                   <h3 className="heading">
@@ -153,7 +153,7 @@ function Footer() {
                     <a
                       href="#"
                       className="img rounded mb-3"
-                      style="background-image: url(images/prod-1.jpg);"
+                      style={{backgroundImage: 'url(images/prod-1.jpg)'}}
                     ></a>
                     <div className="text">
                       <h3>
@@ -189,42 +189,42 @@ function Footer() {
                     <a
                       href="#"
                       className="img"
-                      style="background-image: url(images/insta-1.jpg);"
+                      style={{backgroundImage: 'url(images/insta-1.jpg)'}}
                     ></a>
                   </div>
                   <div className="col-4 col-md-4">
                     <a
                       href="#"
                       className="img"
-                      style="background-image: url(images/insta-2.jpg);"
+                      style={{backgroundImage: 'url(images/insta-2.jpg)'}}
                     ></a>
                   </div>
                   <div className="col-4 col-md-4">
                     <a
                       href="#"
                       className="img"
-                      style="background-image: url(images/insta-3.jpg);"
+                      style={{backgroundImage: 'url(images/insta-3.jpg)'}}
                     ></a>
                   </div>
                   <div className="col-4 col-md-4">
                     <a
                       href="#"
                       className="img"
-                      style="background-image: url(images/insta-4.jpg);"
+                      style={{backgroundImage: 'url(images/insta-4.jpg)'}}
                     ></a>
                   </div>
                   <div className="col-4 col-md-4">
                     <a
                       href="#"
                       className="img"
-                      style="background-image: url(images/insta-5.jpg);"
+                      style={{backgroundImage: 'url(images/insta-5.jpg)'}}
                     ></a>
                   </div>
                   <div className="col-4 col-md-4">
                     <a
                       href="#"
                       className="img"
-                      style="background-image: url(images/insta-6.jpg);"
+                      style={{backgroundImage: 'url(images/insta-6.jpg)'}}
                     ></a>
                   </div>
                 </div>

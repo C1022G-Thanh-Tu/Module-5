@@ -1,28 +1,9 @@
-const facilitiesList = [
-  {
-    facilityImg: "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
-    facilityName: "PHÒNG SUITE HƯỚNG BIỂN",
-    facilityArea: "Diện tích phòng: 85.8 m2",
-    facilityRentalCost: "20000",
-  },
-  {
-    facilityImg: "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
-    facilityName: "PHÒNG SUITE HƯỚNG BIỂN",
-    facilityArea: "Diện tích phòng: 85.8 m2",
-    facilityRentalCost: "20000",
-  },
-  {
-    facilityImg: "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
-    facilityName: "PHÒNG SUITE HƯỚNG BIỂN",
-    facilityArea: "Diện tích phòng: 85.8 m2",
-    facilityRentalCost: "20000",
-  },
-];
+import facilitiesList from "./Facilities";
 
 function FacilitiesList() {
   return (
     <>
-      <div style="max-width:2000px;margin-top:70px">
+      <div style={{ maxWidth: "2000px", marginTop: "70px" }}>
         <div className="heading-img">
           <h3>LOẠI PHÒNG</h3>
         </div>
@@ -45,13 +26,14 @@ function FacilitiesList() {
                     src={facility.facilityImg}
                     className="card-img-top"
                     alt="..."
-                    width="370"
-                    height="239"
+                    width={370}
+                    height={239}
                   />
                   <div className="card-body">
                     <h5 className="card-title">{facility.facilityName}</h5>
                     <p className="card-text">{facility.facilityArea}</p>
                     <button
+                      style={{marginRight: '5px'}}
                       type="button"
                       className="btn btn-danger"
                       data-toggle="modal"
