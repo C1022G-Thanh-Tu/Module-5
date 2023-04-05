@@ -1,9 +1,12 @@
+import Footer from "../Footer";
+import Header from "../Header";
 import facilitiesList from "./Facilities";
 import facilityType from "./FacilityType";
 
 function FacilitiesList() {
   return (
     <>
+      <Header />
       <div style={{ maxWidth: "2000px", marginTop: "70px" }}>
         <div className="heading-img">
           <h3>LOẠI PHÒNG</h3>
@@ -34,7 +37,7 @@ function FacilitiesList() {
                     <h5 className="card-title">{facility.facilityName}</h5>
                     <p className="card-text">{facility.facilityArea}</p>
                     <button
-                      style={{marginRight: '5px'}}
+                      style={{ marginRight: "5px" }}
                       type="button"
                       className="btn btn-danger"
                       data-toggle="modal"
@@ -86,6 +89,7 @@ function FacilitiesList() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

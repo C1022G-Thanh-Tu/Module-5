@@ -1,40 +1,27 @@
-const customerList = [
-  {
-    name: "abc",
-    dateOfBirth: "2020/12/12",
-    gender: "nam",
-    identityNumb: "00956",
-    phoneNumb: "090123",
-    email: "123@gmail.com",
-    type: "Diamond",
-    address: "abc",
-  },
-  {
-    name: "abc",
-    dateOfBirth: "2020/12/12",
-    gender: "nam",
-    identityNumb: "00956",
-    phoneNumb: "090123",
-    email: "123@gmail.com",
-    type: "Diamond",
-    address: "abc",
-  },
-];
-
-let stt = 1;
+import Footer from "../Footer";
+import Header from "../Header";
+import { customerList } from "./Customer";
 
 function CustomerList() {
   return (
     <>
-      <div style="max-width:2000px;margin-top:70px">
+      <Header />
+      <div style={{ maxWidth: 2000, marginTop: 70 }}>
         <div className="heading-img">
           <h3>KHÁCH HÀNG</h3>
         </div>
 
         <div className="room container">
           <div
-            className="text-center"
-            style="font-size: 30px;color: #cbbe73;line-height: 36px;text-align: left;font-family:Playfair Display;font-weight:700;font-style:normal"
+            classname="text-center"
+            style={{
+              fontSize: 30,
+              color: "#cbbe73",
+              textAlign: "left",
+              fontFamily: "Playfair Display",
+              fontWeight: 700,
+              fontStyle: "normal",
+            }}
           >
             Danh sách khách hàng
           </div>
@@ -64,9 +51,9 @@ function CustomerList() {
                 </tr>
               </thead>
               <tbody>
-                {customerList.map((customer, index) => (
-                  <tr key={index}>
-                    <th scope="row">{stt++}</th>
+                {customerList.map((customer) => (
+                  <tr key={customer.id}>
+                    <th scope="row">{customer.id}</th>
                     <td>{customer.name}</td>
                     <td>{customer.dateOfBirth}</td>
                     <td>{customer.gender}</td>
@@ -78,7 +65,7 @@ function CustomerList() {
                     <td>
                       <button
                         type="button"
-                        className="btn btn-danger"
+                        className="btn btn-danger me-2"
                         data-toggle="modal"
                         data-target="#exampleModal"
                       >
@@ -129,6 +116,7 @@ function CustomerList() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

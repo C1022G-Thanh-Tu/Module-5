@@ -1,6 +1,6 @@
 import './App.css';
 import List from './component/list';
-import { NavLink, Route, Routes, useParams } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Create from './component/create';
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
