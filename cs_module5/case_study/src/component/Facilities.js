@@ -25,7 +25,7 @@ const facilitiesList = [
     facilityPoolArea: null,
     facilityNumbOfFloor: '3',
     facilityFreeAminities: null,
-    facilityAminities: [3]
+    facilityAminities: [2, 3]
   },
   {
     facilityImg: "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
