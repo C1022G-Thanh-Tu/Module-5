@@ -1,4 +1,5 @@
 import facilitiesList from "./Facilities";
+import facilityType from "./FacilityType";
 
 function FacilitiesList() {
   return (

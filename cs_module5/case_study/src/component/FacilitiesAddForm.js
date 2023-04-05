@@ -98,9 +98,9 @@ function FacilitiesAddForm() {
                     name="rental-type"
                     id="rental-type"
                   >
-                    <option value="">Ngày</option>
-                    <option value="1">Tháng</option>
-                    <option value="2">Năm</option>
+                    <option value="1">Ngày</option>
+                    <option value="2">Tháng</option>
+                    <option value="3">Năm</option>
                   </select>
                 </div>
               </div>
