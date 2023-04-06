@@ -53,11 +53,10 @@ function Edit() {
               toast("Edited failed");
             } else {
               toast("Edited successful");
+              navigate("/");
             }
 
             setSubmitting(false);
-
-            // navigate("/");
           };
           create();
         }}
