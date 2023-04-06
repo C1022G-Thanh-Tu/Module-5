@@ -20,10 +20,13 @@ function Create() {
         onSubmit={(values, { setSubmitting }) => {
           const create = async () => {
             console.log(values);
-            await bookManagementService.save(values);
+            if (await bookManagementService.save(values)) {
+              toast("Added failed");
+            } else {
+              toast("Added successful");
+              navigate("/");
+            }
             setSubmitting(false);
-            toast("Added successful");
-            navigate("/");
           };
           create();
         }}

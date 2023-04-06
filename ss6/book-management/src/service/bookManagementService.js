@@ -21,7 +21,7 @@ export const remove = async (id) => {
     try {
         await axios.delete('https://my-json-server.typicode.com/codegym-vn/mock-api-books/books', {id})
     } catch (error) {
-        console.log(error);
+        return error
     }
 }
 
@@ -30,7 +30,7 @@ export const findById = async (id) => {
         const book = await axios.get(`https://my-json-server.typicode.com/codegym-vn/mock-api-books/books/${id}` )
         return book
     } catch (error) {
-        console.log(error);
+        return error
     }
 }
 
@@ -38,6 +38,6 @@ export const edit = async (book) => {
     try {
         await axios.put('https://my-json-server.typicode.com/codegym-vn/mock-api-books/books', {...book})
     } catch (error) {
-        console.log(error);
+        return error
     }
 }

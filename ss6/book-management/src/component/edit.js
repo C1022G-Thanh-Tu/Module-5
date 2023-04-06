@@ -10,7 +10,6 @@ function Edit() {
   const param = useParams();
   const [book, setBook] = useState(async () => {
     const bookDetail = await bookManagementService.findById(param.id);
-    console.log("abc");
     return setBook(bookDetail.data);
   });
 
@@ -23,15 +22,24 @@ function Edit() {
   // }, [param.id]);
 
   const handleChangeTitle = (value) => {
-    setBook({ title: value });
+    setBook({ 
+      id: book.id,
+      title: value ,
+      quantity: book.quantity
+    });
   };
 
   const handleChangeQuantity = (value) => {
-    setBook({ quantity: value });
+    setBook({ 
+      id: book.id,
+      title: book.title ,
+      quantity: value
+    });
   };
 
   return (
     <>
+    {console.log(book)}
       <NavLink to="/" className="btn btn-dark">
         List
       </NavLink>
@@ -44,10 +52,15 @@ function Edit() {
         onSubmit={(values, { setSubmitting }) => {
           const create = async () => {
             console.log(values);
-            bookManagementService.edit(values);
+            if (await bookManagementService.edit(values)) {
+              toast("Edited failed");
+            } else {
+              toast("Edited successful");
+            }
+            
             setSubmitting(false);
-            toast("Edited successful");
-            navigate("/");
+            
+            // navigate("/");
           };
           create();
         }}

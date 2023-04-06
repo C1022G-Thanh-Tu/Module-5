@@ -14,8 +14,11 @@ function List() {
   }, []);
 
   const handleDelete = async (id) => {
-    await bookManagementService.remove(id);
-    toast.success("Deleted successfully!");
+    if (await bookManagementService.remove(id)) {
+      toast.success("Deleted failed!");
+    } else {
+      toast.success("Deleted successfully!");
+    }
   };
 
   return (
