@@ -6,9 +6,9 @@ function Header() {
       <div id="header" className="fixed-top">
         <ul id="nav">
           <li>
-            <a href="">
+            <NavLink to='/'>
               <img src="img/logo@2x.png" alt="" height="40px" />
-            </a>
+            </NavLink>
           </li>
           <li>
             <NavLink to="/facility">Dịch vụ</NavLink>
@@ -20,7 +20,7 @@ function Header() {
             <NavLink to="/customer">Khách hàng</NavLink>
           </li>
           <li>
-            <a href="contract.html">Hợp đồng</a>
+            <NavLink to='/contract'>Hợp đồng</NavLink>
           </li>
         </ul>
       </div>

@@ -1,12 +1,8 @@
-import Footer from "../Footer";
-import Header from "../Header";
 import facilitiesList from "./Facilities";
-import facilityType from "./FacilityType";
 
 function FacilitiesList() {
   return (
     <>
-      <Header />
       <div style={{ maxWidth: "2000px", marginTop: "70px" }}>
         <div className="heading-img">
           <h3>LOẠI PHÒNG</h3>
@@ -89,7 +85,6 @@ function FacilitiesList() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

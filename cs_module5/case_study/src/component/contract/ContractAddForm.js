@@ -1,4 +1,4 @@
-function ContractAddhtmlForm() {
+function ContractAddForm() {
   return (
     <>
       <div className="testbox" style="margin-top: 70px;">
@@ -52,4 +52,4 @@ function ContractAddhtmlForm() {
 }
 
 
-export default ContractAddhtmlForm;
+export default ContractAddForm;

@@ -1,11 +1,10 @@
-import Footer from "../Footer";
-import Header from "../Header";
 import { customerList } from "./Customer";
+import { customerType } from "./CustomerType";
+import { Link } from 'react-router-dom'
 
 function CustomerList() {
   return (
     <>
-      <Header />
       <div style={{ maxWidth: 2000, marginTop: 70 }}>
         <div className="heading-img">
           <h3>KHÁCH HÀNG</h3>
@@ -26,13 +25,13 @@ function CustomerList() {
             Danh sách khách hàng
           </div>
           <div className="element-button mb-5">
-            <a
+            <Link
               className="btn btn-add btn-sm bg-success text-white"
-              href="add-form-customer.html"
+              to='/customer-add'
             >
               <i className="fas fa-plus"></i>
               Tạo mới khách hàng
-            </a>
+            </Link>
           </div>
           <div className="row">
             <table className="table table-striped">
@@ -60,7 +59,13 @@ function CustomerList() {
                     <td>{customer.identityNumb}</td>
                     <td>{customer.phoneNumb}</td>
                     <td>{customer.email}</td>
-                    <td>{customer.type}</td>
+                    <td>
+                      {
+                        customerType.filter(
+                          (type) => type.id === customer.typeId
+                        )[0].name
+                      }
+                    </td>
                     <td>{customer.address}</td>
                     <td>
                       <button
@@ -116,7 +121,6 @@ function CustomerList() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

@@ -1,4 +1,4 @@
-function CustomerEdithtmlForm() {
+function CustomerEditForm() {
   return (
     <>
       <div className="testbox" style="margin-top: 70px;">
@@ -78,4 +78,4 @@ function CustomerEdithtmlForm() {
   );
 }
 
-export default CustomerEdithtmlForm;
+export default CustomerEditForm;

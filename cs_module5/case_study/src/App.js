@@ -5,15 +5,31 @@ import "react-toastify/dist/ReactToastify.css";
 import FacilitiesList from "./component/facility/FacilitiesList";
 import CustomerList from "./component/customer/CustomerList";
 import Home from "./component/home/Home";
+import Header from "./component/Header";
+import Footer from "./component/Footer";
+import ContractList from "./component/contract/ContractList";
+import FacilitiesEditForm from "./component/facility/FacilitiesEditForm";
+import FacilitiesAddForm from "./component/facility/FacilitiesAddForm";
+import CustomerEdithtmlForm from "./component/customer/CustomerEditForm";
+import CustomerAddhtmlForm from "./component/customer/CustomerAddForm";
+import ContractAddForm from "./component/contract/ContractAddForm";
 
 function App() {
   return (
     <>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/facility" element={<FacilitiesList />} />
+        <Route path="/facility-edit/:id" element={<FacilitiesEditForm />} />
+        <Route path="/facility-add" element={<FacilitiesAddForm />} />
         <Route path="/customer" element={<CustomerList />} />
+        <Route path="/customer-edit/:id" element={<CustomerEdithtmlForm />} />
+        <Route path="/customer-add" element={<CustomerAddhtmlForm />} />
+        <Route path="/contract" element={<ContractList />} />
+        <Route path="/contract-add" element={<ContractAddForm />} />
       </Routes>
+      <Footer />
       <ToastContainer />
     </>
   );

@@ -2,8 +2,11 @@ import React, { useEffect } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
 
-{/* Automatic Slideshow - change image every 4 seconds */}
+{
+  /* Automatic Slideshow - change image every 4 seconds */
+}
 var myIndex = 0;
+let timeout;
 function carousel() {
   var i;
   var x = document.getElementsByClassName("mySlides");
@@ -15,12 +18,18 @@ function carousel() {
     myIndex = 1;
   }
   x[myIndex - 1].style.display = "block";
-  setTimeout(carousel, 4000);
+  timeout = setTimeout(carousel, 4000);
 }
 
 function Home() {
   useEffect(() => {
     carousel();
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+    };
   }, []);
 
   return (

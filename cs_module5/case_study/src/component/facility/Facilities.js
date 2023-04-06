@@ -1,5 +1,6 @@
-const facilitiesList = [
+export const facilitiesList = [
   {
+    id: 1,
     facilityImg: "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
     facilityName: "PHÒNG SUITE HƯỚNG BIỂN",
     facilityArea: "Diện tích phòng: 85.8 m2",
@@ -15,6 +16,7 @@ const facilitiesList = [
     facilityAminitiesid: [1, 2]
   },
   {
+    id: 2,
     facilityImg: "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
     facilityName: "PHÒNG SUITE HƯỚNG BIỂN",
     facilityArea: "Diện tích phòng: 85.8 m2",
@@ -28,6 +30,7 @@ const facilitiesList = [
     facilityAminities: [2, 3]
   },
   {
+    id: 3,
     facilityImg: "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
     facilityName: "PHÒNG SUITE HƯỚNG BIỂN",
     facilityArea: "Diện tích phòng: 85.8 m2",

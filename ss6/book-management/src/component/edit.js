@@ -49,9 +49,10 @@ function Edit() {
         onSubmit={(values, { setSubmitting }) => {
           const create = async () => {
             console.log(values);
-            if (await bookManagementService.edit(values)) {
+            try {
+              await bookManagementService.edit(values)
               toast("Edited failed");
-            } else {
+            } catch (error) {
               toast("Edited successful");
               navigate("/");
             }

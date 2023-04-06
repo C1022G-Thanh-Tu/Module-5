@@ -1,7 +1,7 @@
 function CustomerAddhtmlForm() {
   return (
     <>
-      <div className="testbox" style="margin-top: 70px;">
+      <div className="testbox" style={{marginTop: '70px'}}>
         <div className="">
           <h1>Thêm mới Khách hàng</h1>
           <div className="item">
@@ -65,10 +65,10 @@ function CustomerAddhtmlForm() {
             <input type="text" name="address" id="address" />
           </div>
           <div className="btn-block">
-            <button type="button" style="background-color: #198754">
+            <button type="button" style={{backgroundColor: '#198754'}}>
               Sửa
             </button>
-            <button type="button" style="background-color: #0d6efd">
+            <button type="button" style={{backgroundColor: '#0d6efd'}}>
               Thoát
             </button>
           </div>
