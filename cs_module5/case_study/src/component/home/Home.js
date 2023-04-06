@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "../Footer";
 import Header from "../Header";
 
+{/* Automatic Slideshow - change image every 4 seconds */}
+var myIndex = 0;
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  myIndex++;
+  if (myIndex > x.length) {
+    myIndex = 1;
+  }
+  x[myIndex - 1].style.display = "block";
+  setTimeout(carousel, 4000);
+}
+
 function Home() {
+  useEffect(() => {
+    carousel();
+  }, []);
+
   return (
     <>
-    <Header />
+      <Header />
       <div style={{ maxWidth: 2000, marginTop: 70 }}>
         {/* Automatic Slideshow Images */}
         <div className="mySlides">
@@ -53,7 +73,6 @@ function Home() {
               style={{
                 fontSize: 24,
                 color: "#cbbe73",
-                lineHeight: 36,
                 textAlign: "left",
                 fontFamily: "Playfair Display",
                 fontWeight: 700,
@@ -99,7 +118,6 @@ function Home() {
               style={{
                 fontSize: 24,
                 color: "#cbbe73",
-                lineHeight: 36,
                 textAlign: "center",
                 fontFamily: "Playfair Display",
                 fontWeight: 700,
