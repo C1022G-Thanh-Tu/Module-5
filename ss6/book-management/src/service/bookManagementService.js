@@ -36,8 +36,9 @@ export const findById = async (id) => {
 
 export const edit = async (book) => {
     try {
-        await axios.put('https://my-json-server.typicode.com/codegym-vn/mock-api-books/books', {...book})
+        await axios.put(`https://my-json-server.typicode.com/codegym-vn/mock-api-books/books/${book.id}`)
     } catch (error) {
+        console.log(error);
         return error
     }
 }
