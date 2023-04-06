@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
 import { userDeleteAction, userListAction } from '../redux/action/action'
 
@@ -8,7 +8,6 @@ function UserMangement() {
   const dispatch = useDispatch();
   useEffect (() => {
     users = dispatch(userListAction())
-    console.log(users);
   },[])
   return (
     <>
