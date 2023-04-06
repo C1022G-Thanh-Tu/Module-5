@@ -5,13 +5,30 @@ import { toast } from "react-toastify";
 import { useNavigate, NavLink, useParams } from "react-router-dom";
 import { Oval } from "react-loader-spinner";
 
-function Edit(props) {
+function Edit() {
   let navigate = useNavigate();
   const param = useParams();
   const [book, setBook] = useState(async () => {
     const bookDetail = await bookManagementService.findById(param.id);
-    return setBook(bookDetail);
+    console.log("abc");
+    return setBook(bookDetail.data);
   });
+
+  // useEffect(() => {
+  //   async function getBookDetail() {
+  //     const bookDetail = await bookManagementService.findById(param.id);
+  //     setBook(bookDetail.data);
+  //   }
+  //   getBookDetail();
+  // }, [param.id]);
+
+  const handleChangeTitle = (value) => {
+    setBook({ title: value });
+  };
+
+  const handleChangeQuantity = (value) => {
+    setBook({ quantity: value });
+  };
 
   return (
     <>
@@ -20,12 +37,14 @@ function Edit(props) {
       </NavLink>
       <Formik
         initialValues={{
-            title: book.title,
-            quantity: book.quantity,
+          id: book.id,
+          title: book.title,
+          quantity: book.quantity,
         }}
         onSubmit={(values, { setSubmitting }) => {
           const create = async () => {
             console.log(values);
+            bookManagementService.edit(values);
             setSubmitting(false);
             toast("Edited successful");
             navigate("/");
@@ -36,17 +55,29 @@ function Edit(props) {
         {({ isSubmitting }) => (
           <Form>
             <h1>Edit</h1>
+            <Field id="id" type="hidden" name="id" />
             <div className="mb-3">
               <label htmlFor="title" style={{ width: "80px" }}>
                 Title:
               </label>
-              <Field id="title" name="title" />
+              <Field
+                id="title"
+                name="title"
+                value={book.title}
+                onChange={(e) => handleChangeTitle(e.target.value)}
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="quantity" style={{ width: "80px" }}>
                 Quantity:
               </label>
-              <Field type="number" id="quantity" name="quantity" />
+              <Field
+                type="number"
+                id="quantity"
+                name="quantity"
+                value={book.quantity}
+                onChange={(e) => handleChangeQuantity(e.target.value)}
+              />
             </div>
             {isSubmitting ? (
               <Oval
