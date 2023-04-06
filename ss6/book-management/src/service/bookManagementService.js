@@ -27,7 +27,7 @@ export const remove = async (id) => {
 
 export const findById = async (id) => {
     try {
-        const book = await axios.get(`https://my-json-server.typicode.com/codegym-vn/mock-api-books/books/${id}` )
+        const book = await axios.get(`https://my-json-server.typicode.com/codegym-vn/mock-api-books/books/${id}`)
         return book
     } catch (error) {
         return error
