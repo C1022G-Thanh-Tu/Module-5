@@ -1,15 +1,15 @@
 const facilityType = [
     {
         id: 1,
-        name: 'villa'
+        name: 'Villa'
     },
     {
         id: 2,
-        name: 'house'
+        name: 'House'
     },
     {
         id: 3,
-        name: 'room'
+        name: 'Room'
     }
 ]
 export default facilityType

@@ -102,6 +102,7 @@ html,
 body {
   min-height: 100%;
 }
+
 body,
 div,
 form,
@@ -120,6 +121,7 @@ h1 {
   margin: 15px 0;
   font-weight: 400;
 }
+
 .testbox {
   display: flex;
   justify-content: center;
@@ -127,12 +129,14 @@ h1 {
   height: inherit;
   padding: 3px;
 }
+
 form {
   width: 100%;
   padding: 20px;
   background: #fff;
   box-shadow: 0 2px 5px #ccc;
 }
+
 input,
 select,
 textarea {
@@ -140,34 +144,42 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 3px;
 }
+
 input {
   width: calc(100% - 10px);
   padding: 5px;
 }
+
 select {
   width: 100%;
   padding: 7px 0;
   background: transparent;
 }
+
 textarea {
   width: calc(100% - 6px);
 }
+
 .item {
   position: relative;
   margin: 10px 0;
 }
+
 .item:hover p,
 .item:hover i {
   color: #095484;
 }
+
 input:hover,
 select:hover,
 textarea:hover {
   box-shadow: 0 0 5px 0 #095484;
 }
-input[type="date"]::-webkit-inner-spin-button {
+
+/* input[type="date"]::-webkit-inner-spin-button {
   display: none;
-}
+} */
+
 input[type="time"]::-webkit-inner-spin-button {
   margin: 2px 22px 0 0;
 }

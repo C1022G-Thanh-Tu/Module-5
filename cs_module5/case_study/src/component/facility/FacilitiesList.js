@@ -1,4 +1,5 @@
 import facilitiesList from "./Facilities";
+import { Link } from 'react-router-dom'
 
 function FacilitiesList() {
   return (
@@ -10,13 +11,13 @@ function FacilitiesList() {
 
         <div className="room container">
           <div className="element-button mb-5">
-            <a
+            <Link
               className="btn btn-add btn-sm bg-success text-white"
-              href="add-form-facilities.html"
+              to='/facility-add'
             >
               <i className="fas fa-plus"></i>
               Tạo mới dịch vụ
-            </a>
+            </Link>
           </div>
           <div className="row">
             {facilitiesList.map((facility, index) => (

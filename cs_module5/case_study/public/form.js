@@ -54,7 +54,6 @@ const handleAminitiesEvents = () => {
       //     break;
       default:
         throw new Error("Value dịch vụ đi kèm không hợp lệ");
-        break;
     }
   };
 };

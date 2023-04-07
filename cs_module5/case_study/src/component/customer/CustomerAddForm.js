@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { Link } from "react-router-dom";
+import { customerType } from "./CustomerType";
 
 function CustomerAddForm() {
   return (
@@ -16,7 +17,7 @@ function CustomerAddForm() {
           identityNumb: "",
           phoneNumb: "",
           email: "",
-          typeId: "",
+          typeId: 1,
           address: "",
         }}
         validationSchema={Yup.object({
@@ -127,9 +128,9 @@ function CustomerAddForm() {
                 <div className="item">
                   <label htmlFor="typeId">Loại khách</label>
                   <Field as="select" name="typeId">
-                    <option value="1">Kim Cương</option>
-                    <option value="2">Vàng</option>
-                    <option value="3">Bạch Kim</option>
+                    {customerType.map((type) => (
+                      <option key={type.id} value={type.id}>{type.name}</option>
+                    ))}
                   </Field>
                 </div>
                 <div className="item">
