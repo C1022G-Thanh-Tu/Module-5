@@ -79,12 +79,12 @@ function CustomerList() {
                       >
                         <i className="fas fa-trash-alt"></i>
                       </button>
-                      <a
+                      <Link
                         className="btn btn-primary btn-sm edit"
-                        href="edit-form-customer.html"
+                        to={`/customer-edit/${customer.id}`}
                       >
                         <i className="fas fa-edit"></i>
-                      </a>
+                      </Link>
                     </td>
                   </tr>
                 ))}

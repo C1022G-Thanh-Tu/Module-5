@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { customerType } from "./CustomerType";
 
 function CustomerEditForm() {
   // let navigate = useNavigate();
@@ -157,9 +158,11 @@ function CustomerEditForm() {
                 <div className="item">
                   <label htmlFor="typeId">Loại khách</label>
                   <Field as="select" name="typeId">
-                    <option value="1">Kim Cương</option>
-                    <option value="2">Vàng</option>
-                    <option value="3">Bạch Kim</option>
+                    {customerType.map((type) => (
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
+                    ))}
                   </Field>
                 </div>
                 <div className="item">

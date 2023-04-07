@@ -65,7 +65,7 @@ function Footer() {
                   </li>
                 </ul>
               </div>
-              <form action="#" className="subscribe-form">
+              <form action="#" className="subscribe-form" style={{backgroundColor: '#046056', boxShadow: 'none'}}>
                 <div className="form-group d-flex">
                   <input
                     type="text"

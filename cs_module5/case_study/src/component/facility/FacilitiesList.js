@@ -42,12 +42,12 @@ function FacilitiesList() {
                     >
                       <i className="fas fa-trash-alt"></i>
                     </button>
-                    <a
+                    <Link
                       className="btn btn-primary btn-sm edit"
-                      href="edit-form-facilities.html"
+                      to={`/facility-edit/${facility.id}`}
                     >
                       <i className="fas fa-edit"></i>
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

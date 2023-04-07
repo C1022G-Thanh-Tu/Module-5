@@ -240,17 +240,6 @@ function FacilitiesAddForm() {
                         </p>
                       </div>
                       <div className="col-6 px-0">
-                        {/* <select
-                          defaultValue=""
-                          style={{ borderRadius: 5, width: "97%" }}
-                          name="type_room"
-                          id="room-aminities"
-                          multiple
-                        >
-                          {aminities.map((aminity) => (
-                            <option value={aminity.id}>{aminity.name}</option>
-                          ))}
-                        </select> */}
                         {aminities.map((aminity) => (
                           <div className="row" key={aminity.id}>
                             <Field
@@ -277,16 +266,12 @@ function FacilitiesAddForm() {
                     <div className="col-6 px-0">
                       <Field
                         as="select"
-                        defaultValue=""
                         style={{ borderRadius: 5, width: "97%" }}
                         name="facilityTypeId"
                         id="facilities"
                         onChange={handleFacilityChanged}
                       >
                         <option value="0">Dịch vụ</option>
-                        {/* <option value='1'>Villa</option>
-                        <option value='2'>House</option>
-                        <option value='3'>Room</option> */}
                         {facilityType.map((type) => (
                           <option key={type.id} value={type.id}>
                             {type.name}

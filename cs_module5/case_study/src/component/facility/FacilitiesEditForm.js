@@ -1,3 +1,12 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from "react-loader-spinner";
+import { Link } from "react-router-dom";
+import aminities from "../facility/Aminities";
+import facilityType from "./FacilityType";
+
 function FacilitiesEditForm() {
   const handleFacilityChanged = (event) => {
     const villa = document.getElementById("villa");
@@ -31,6 +40,7 @@ function FacilitiesEditForm() {
   };
   return (
     <>
+    <h1>abc</h1>
       <Formik
         initialValues={{
           facilityImg: "",
@@ -274,9 +284,6 @@ function FacilitiesEditForm() {
                         onChange={handleFacilityChanged}
                       >
                         <option value="0">Dịch vụ</option>
-                        {/* <option value='1'>Villa</option>
-                        <option value='2'>House</option>
-                        <option value='3'>Room</option> */}
                         {facilityType.map((type) => (
                           <option key={type.id} value={type.id}>
                             {type.name}
