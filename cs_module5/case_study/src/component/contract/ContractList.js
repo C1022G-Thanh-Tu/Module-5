@@ -19,6 +19,7 @@ function ContractList() {
               fontFamily: "Playfair Display",
               fontWeight: 700,
               fontStyle: "normal",
+              marginBottom: "20px"
             }}
           >
             Danh sách hợp đồng

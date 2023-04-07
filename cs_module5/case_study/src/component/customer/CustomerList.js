@@ -16,10 +16,11 @@ function CustomerList() {
             style={{
               fontSize: 30,
               color: "#cbbe73",
-              textAlign: "left",
+              textAlign: "center",
               fontFamily: "Playfair Display",
               fontWeight: 700,
               fontStyle: "normal",
+              marginBottom: "20px"
             }}
           >
             Danh sách khách hàng
@@ -55,7 +56,9 @@ function CustomerList() {
                     <th scope="row">{customer.id}</th>
                     <td>{customer.name}</td>
                     <td>{customer.dateOfBirth}</td>
-                    <td>{customer.gender}</td>
+                    <td>
+                      {customer.gender === 0 ? 'nam' : 'nữ'}
+                      </td>
                     <td>{customer.identityNumb}</td>
                     <td>{customer.phoneNumb}</td>
                     <td>{customer.email}</td>

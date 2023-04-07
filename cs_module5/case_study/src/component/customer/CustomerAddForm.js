@@ -1,8 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
+import { Link } from "react-router-dom";
 
 function CustomerAddForm() {
   return (
@@ -19,12 +20,32 @@ function CustomerAddForm() {
           address: "",
         }}
         validationSchema={Yup.object({
-          name: Yup.string().required("Required"),
-          email: Yup.string().required("Required").email("Wrong format"),
-          phone: Yup.string().required("Required"),
+          name: Yup.string()
+            .required("Trường này bắt buộc nhập")
+            .matches(
+              "^[A-Z][a-z]+(\\s[A-Z][a-z]+)*$",
+              "Tên không được chứa số. Và các kí tự đầu tiên của mỗi từ phải viết hoa"
+            ),
+          email: Yup.string()
+            .required("Trường này bắt buộc nhập")
+            .email("Sai format email"),
+          phoneNumb: Yup.string()
+            .required("Trường này bắt buộc nhập")
+            .matches(
+              "^(090|091|\\(84\\)\\+90|\\(84\\)\\+91)[\\d]{7}$",
+              "Số điện thoại phải đúng định dạng 090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx."
+            ),
+          identityNumb: Yup.string()
+            .required("Trường này bắt buộc nhập")
+            .matches(
+              "^\\d{9}$",
+              "Số CMND phải đúng định dạng XXXXXXXXX hoặc XXXXXXXXXXXX"
+            ),
         })}
         onSubmit={(values, { setSubmitting }) => {
+          console.log(values);
           setSubmitting(false);
+          toast("Thêm mới thành công");
         }}
       >
         {({ isSubmitting }) => (
@@ -42,60 +63,74 @@ function CustomerAddForm() {
                   />
                 </div>
                 <div className="item">
-                  <label htmlFor="date-of-birth">Ngày sinh</label>
+                  <label htmlFor="dateOfBirth">Ngày sinh</label>
                   <Field
                     type="date"
-                    name="date-of-birth"
-                    id="date-of-birth"
+                    name="dateOfBirth"
+                    id="dateOfBirth"
                     required
+                  />
+                  <ErrorMessage
+                    name="dateOfBirth"
+                    component="div"
+                    className="text-danger"
                   />
                 </div>
                 <div className="item">
                   <label htmlFor="gender">Giới tính</label>
                   <div className="col-md-12">
                     <Field
-                      required
                       type="radio"
                       className="gender"
                       id="men"
                       name="gender"
-                      value="true"
+                      value="0"
                     />
                     <label htmlFor="men">Nam</label>
                     <Field
-                      required
                       type="radio"
                       className="gender"
                       id="women"
                       name="gender"
-                      value="false"
+                      value="1"
                     />
                     <label htmlFor="women">Nữ</label>
                   </div>
                 </div>
                 <div className="item">
-                  <label htmlFor="identity-number">Số CMND</label>
-                  <Field
-                    type="text"
-                    name="identity-number"
-                    id="identity-number"
+                  <label htmlFor="identityNumb">Số CMND</label>
+                  <Field type="text" name="identityNumb" id="identityNumb" />
+                  <ErrorMessage
+                    name="identityNumb"
+                    component="div"
+                    className="text-danger"
                   />
                 </div>
                 <div className="item">
-                  <label htmlFor="phone-number">Số Điện Thoại</label>
-                  <Field type="text" name="phone-number" id="phone-number" />
+                  <label htmlFor="phoneNumb">Số Điện Thoại</label>
+                  <Field type="text" name="phoneNumb" id="phoneNumb" />
+                  <ErrorMessage
+                    name="phoneNumb"
+                    component="div"
+                    className="text-danger"
+                  />
                 </div>
                 <div className="item">
                   <label htmlFor="email">Email</label>
                   <Field type="email" name="email" id="email" />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-danger"
+                  />
                 </div>
                 <div className="item">
-                  <label htmlFor="customer-type">Loại khách</label>
-                  <select>
-                    <option value="">Bạc</option>
-                    <option value="1">Vàng</option>
-                    <option value="2">Kim Cương</option>
-                  </select>
+                  <label htmlFor="typeId">Loại khách</label>
+                  <Field as="select" name="typeId">
+                    <option value="1">Kim Cương</option>
+                    <option value="2">Vàng</option>
+                    <option value="3">Bạch Kim</option>
+                  </Field>
                 </div>
                 <div className="item">
                   <label htmlFor="address">Địa chỉ</label>
@@ -119,16 +154,14 @@ function CustomerAddForm() {
                     <>
                       <button
                         type="submit"
-                        style={{ backgroundColor: "#198754" }}
+                        style={{ marginRight: "10px" }}
+                        className="btn btn-success"
                       >
                         Thêm
                       </button>
-                      <button
-                        type="button"
-                        style={{ backgroundColor: "#0d6efd" }}
-                      >
+                      <Link to="/customer" className="btn btn-primary">
                         Thoát
-                      </button>
+                      </Link>
                     </>
                   )}
                 </div>
