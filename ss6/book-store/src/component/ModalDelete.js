@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import bookService from "../service/bookService";
 
@@ -7,7 +7,7 @@ function ModalDelete(props) {
     try {
       await bookService.remove(id);
       toast("Deleted successful");
-      props.getList()
+      props.getList();
     } catch (error) {
       toast("Deleted failed");
     }
@@ -49,7 +49,7 @@ function ModalDelete(props) {
               type="button"
               className="btn btn-danger"
               onClick={() => handleDelete(props.id)}
-            //   data-bs-dismiss="modal"
+              data-bs-dismiss="modal"
             >
               Delete
             </button>
