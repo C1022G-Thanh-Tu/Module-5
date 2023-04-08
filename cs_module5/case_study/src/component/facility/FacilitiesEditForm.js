@@ -88,7 +88,7 @@ function FacilitiesEditForm() {
           toast('Thêm mới dịch vụ thành công')
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form>
             <div className="d-flex justify-content-center">
               <div
@@ -240,17 +240,6 @@ function FacilitiesEditForm() {
                         </p>
                       </div>
                       <div className="col-6 px-0">
-                        {/* <select
-                          defaultValue=""
-                          style={{ borderRadius: 5, width: "97%" }}
-                          name="type_room"
-                          id="room-aminities"
-                          multiple
-                        >
-                          {aminities.map((aminity) => (
-                            <option value={aminity.id}>{aminity.name}</option>
-                          ))}
-                        </select> */}
                         {aminities.map((aminity) => (
                           <div className="row" key={aminity.id}>
                             <Field
@@ -258,7 +247,7 @@ function FacilitiesEditForm() {
                               type="checkbox"
                               id={aminity.id}
                               name="facilityAminitiesid"
-                              value={aminity.id}
+                              value={aminity.id.toString()}
                             />
                             <label htmlFor={aminity.id} className="col-10">
                               {aminity.name}
@@ -277,11 +266,15 @@ function FacilitiesEditForm() {
                     <div className="col-6 px-0">
                       <Field
                         as="select"
-                        defaultValue=""
                         style={{ borderRadius: 5, width: "97%" }}
                         name="facilityTypeId"
-                        id="facilities"
-                        onChange={handleFacilityChanged}
+                        onChange={(event) => {
+                          handleFacilityChanged(event);
+                          setFieldValue(
+                            'facilityTypeId',
+                            event.currentTarget.value
+                          )
+                        }}
                       >
                         <option value="0">Dịch vụ</option>
                         {facilityType.map((type) => (

@@ -58,37 +58,40 @@ function FacilitiesAddForm() {
           facilityAminitiesid: [],
         }}
         validationSchema={Yup.object({
-          facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityName: Yup.string()
-            .required("Trường này bắt buộc nhập")
-            .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
-          facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
-          facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityStandard: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityOtherAminities: Yup.string().required(
-            "Trường này bắt buộc nhập"
-          ),
-          facilityPoolArea: Yup.string()
-            .required("Trường này bắt buộc nhập")
-            .matches(
-              "^[1-9][\\d]*$",
-              "Diện tích hồ bơi phải là số nguyên dương"
-            ),
-          facilityNumbOfFloor: Yup.string()
-            .required("Trường này bắt buộc nhập")
-            .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
-          facilityFreeAminities: Yup.string().required(
-            "Trường này bắt buộc nhập"
-          ),
+          // facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
+          // facilityName: Yup.string()
+          //   .required("Trường này bắt buộc nhập")
+          //   .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
+          // facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
+          // facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
+          // facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
+          // facilityStandard: Yup.string().required("Trường này bắt buộc nhập"),
+          // facilityOtherAminities: Yup.string().required(
+          //   "Trường này bắt buộc nhập"
+          // ),
+          // facilityPoolArea: Yup.string()
+          //   .required("Trường này bắt buộc nhập")
+          //   .matches(
+          //     "^[1-9][\\d]*$",
+          //     "Diện tích hồ bơi phải là số nguyên dương"
+          //   ),
+          // facilityNumbOfFloor: Yup.string()
+          //   .required("Trường này bắt buộc nhập")
+          //   .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
+          // facilityFreeAminities: Yup.string().required(
+          //   "Trường này bắt buộc nhập"
+          // ),
         })}
         onSubmit={(values, { setSubmitting }) => {
+          values.facilityAminitiesid = values.facilityAminitiesid.map((data) => (
+            parseInt(data)
+          ));
           console.log(values);
           setSubmitting(false);
-          toast('Thêm mới dịch vụ thành công')
+          toast("Thêm mới dịch vụ thành công");
         }}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, setFieldValue }) => (
           <Form>
             <div className="d-flex justify-content-center">
               <div
@@ -247,7 +250,7 @@ function FacilitiesAddForm() {
                               type="checkbox"
                               id={aminity.id}
                               name="facilityAminitiesid"
-                              value={aminity.id}
+                              value={aminity.id.toString()}
                             />
                             <label htmlFor={aminity.id} className="col-10">
                               {aminity.name}
@@ -268,8 +271,13 @@ function FacilitiesAddForm() {
                         as="select"
                         style={{ borderRadius: 5, width: "97%" }}
                         name="facilityTypeId"
-                        id="facilities"
-                        onChange={handleFacilityChanged}
+                        onChange={(event) => {
+                          handleFacilityChanged(event);
+                          setFieldValue(
+                            'facilityTypeId',
+                            event.currentTarget.value
+                          )
+                        }}
                       >
                         <option value="0">Dịch vụ</option>
                         {facilityType.map((type) => (

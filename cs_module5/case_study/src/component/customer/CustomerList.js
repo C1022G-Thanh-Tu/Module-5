@@ -1,8 +1,35 @@
-import { customerList } from "./Customer";
-import { customerType } from "./CustomerType";
-import { Link } from 'react-router-dom'
 
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'
+import customerService from "../../service/customer/customerService";
+import customerTypeService from "../../service/customer/customerTypeService";
+import ModalDelete from '../modal/modalDelete';
 function CustomerList() {
+  const [customerList, setCustomerList] = useState([])
+  const [customerType, setCustomerType] = useState([])
+  const [deletedId, setDeleteId] = useState(0)
+  const [deletedName, setDeleteName] = useState("")
+
+  useEffect(() => {
+    getCustomerList()
+    getCustomerTypeList()
+  }, [])
+
+  const getCustomerList = async () => {
+    const customerData = await customerService.findAll()
+    setCustomerList(customerData.data)
+  }
+
+  const getCustomerTypeList = async () => {
+    const customerTypeData = await customerTypeService.findAll()
+    setCustomerType(customerTypeData.data)
+  }
+
+  const transferInfo = (id, name) => {
+    setDeleteId(id)
+    setDeleteName(name)
+  }
+
   return (
     <>
       <div style={{ maxWidth: 2000, marginTop: 70 }}>
@@ -51,9 +78,9 @@ function CustomerList() {
                 </tr>
               </thead>
               <tbody>
-                {customerList.map((customer) => (
+                {customerList.map((customer, index) => (
                   <tr key={customer.id}>
-                    <th scope="row">{customer.id}</th>
+                    <th scope="row">{++index}</th>
                     <td>{customer.name}</td>
                     <td>{customer.dateOfBirth}</td>
                     <td>
@@ -74,8 +101,9 @@ function CustomerList() {
                       <button
                         type="button"
                         className="btn btn-danger me-2"
-                        data-toggle="modal"
-                        data-target="#exampleModal"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#exampleModal"
+                        onClick={() => transferInfo(customer.id, customer.name)}
                       >
                         <i className="fas fa-trash-alt"></i>
                       </button>
@@ -90,6 +118,13 @@ function CustomerList() {
                 ))}
               </tbody>
             </table>
+            <ModalDelete
+              id = {deletedId}
+              name = {deletedName}
+              getList = {() => {
+                getCustomerList()
+              }}
+            />
             <div className="mt-5">
               <nav aria-label="Page navigation example">
                 <ul className="pagination justify-content-center">

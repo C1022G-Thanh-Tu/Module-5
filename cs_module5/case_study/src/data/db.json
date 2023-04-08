@@ -1,0 +1,157 @@
+{
+  "customers": [
+    {
+      "id": 2,
+      "name": "abc",
+      "dateOfBirth": "2020/12/12",
+      "gender": 0,
+      "identityNumb": "00956",
+      "phoneNumb": "090123",
+      "email": "123@gmail.com",
+      "typeId": 2,
+      "address": "abc"
+    },
+    {
+      "id": 3,
+      "name": "Tu",
+      "dateOfBirth": "2023-04-07",
+      "gender": 0,
+      "identityNumb": "009561234",
+      "phoneNumb": "0901232334",
+      "email": "123@gmail.com",
+      "typeId": 3,
+      "address": "abc"
+    }
+  ],
+  "customerTypes": [
+    {
+      "id": 1,
+      "name": "Diamond"
+    },
+    {
+      "id": 2,
+      "name": "Gold"
+    },
+    {
+      "id": 3,
+      "name": "Platinum"
+    }
+  ],
+  "facilities": [
+    {
+      "id": 1,
+      "facilityImg": "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
+      "facilityName": "PHÒNG SUITE HƯỚNG BIỂN",
+      "facilityArea": "Diện tích phòng: 85.8 m2",
+      "facilityRentalCost": "20000",
+      "facitilyMaxPeople": "5",
+      "facilityRentalType": "Ngày",
+      "facilityTypeId": 1,
+      "facilityStandard": "vip",
+      "facilityOtherAminities": "Thuê xe máy / xe đạp",
+      "facilityPoolArea": "12",
+      "facilityNumbOfFloor": "3",
+      "facilityFreeAminities": null,
+      "facilityAminitiesid": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": 2,
+      "facilityImg": "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
+      "facilityName": "PHÒNG SUITE HƯỚNG BIỂN",
+      "facilityArea": "Diện tích phòng: 85.8 m2",
+      "facilityRentalCost": "20000",
+      "facitilyMaxPeople": "5",
+      "facilityRentalType": "Ngày",
+      "facilityTypeId": 2,
+      "facilityStandard": "vip",
+      "facilityOtherAminities": "Thuê xe máy / xe đạp",
+      "facilityPoolArea": null,
+      "facilityNumbOfFloor": "3",
+      "facilityFreeAminities": null,
+      "facilityAminities": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": 3,
+      "facilityImg": "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
+      "facilityName": "PHÒNG SUITE HƯỚNG BIỂN",
+      "facilityArea": "Diện tích phòng: 85.8 m2",
+      "facilityRentalCost": "20000",
+      "facitilyMaxPeople": "5",
+      "facilityRentalType": "Ngày",
+      "facilityTypeId": 3,
+      "facilityStandard": null,
+      "facilityOtherAminities": null,
+      "facilityPoolArea": null,
+      "facilityNumbOfFloor": null,
+      "facilityFreeAminities": "buffet sáng",
+      "facilityAminities": [
+        1,
+        3
+      ]
+    }
+  ],
+  "aminities": [
+    {
+      "id": 1,
+      "name": "massage",
+      "unit": "vnd",
+      "price": "12000"
+    },
+    {
+      "id": 2,
+      "name": "karaoke",
+      "unit": "vnd",
+      "price": "12000"
+    },
+    {
+      "id": 3,
+      "name": "thức ăn",
+      "unit": "vnd",
+      "price": "12000"
+    },
+    {
+      "id": 4,
+      "name": "nước uống",
+      "unit": "vnd",
+      "price": "12000"
+    },
+    {
+      "id": 5,
+      "name": "thuê xe di chuyển tham quan resort",
+      "unit": "vnd",
+      "price": "12000"
+    }
+  ],
+  "facilityTypes": [
+    {
+      "id": 1,
+      "name": "Villa"
+    },
+    {
+      "id": 2,
+      "name": "House"
+    },
+    {
+      "id": 3,
+      "name": "Room"
+    }
+  ],
+  "contracts": [
+    {
+      "id": 2,
+      "customerId": 2,
+      "facilitiyId": 3,
+      "contractCode": "HD-2",
+      "startDate": "2021-12-08",
+      "endDate": "2021-13-08",
+      "deposit": "1500000",
+      "totalMoney": "30000000"
+    }
+  ]
+}

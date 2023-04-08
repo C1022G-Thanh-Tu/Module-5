@@ -3,10 +3,25 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import { Link } from "react-router-dom";
-import { customerType } from "./CustomerType";
+import { Link, useNavigate } from "react-router-dom";
+import customerTypeService from "../../service/customer/customerTypeService";
+import customerService from "../../service/customer/customerService";
+import { useEffect, useState } from "react";
 
 function CustomerAddForm() {
+  let navigate = useNavigate();
+
+  const [customerType, setCustomerType] = useState([]);
+
+  const getCustomerTypeList = async () => {
+    const customerTypeData = await customerTypeService.findAll();
+    setCustomerType(customerTypeData.data);
+  };
+
+  useEffect(() => {
+    getCustomerTypeList();
+  }, []);
+
   return (
     <>
       <Formik
@@ -44,9 +59,18 @@ function CustomerAddForm() {
             ),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-          setSubmitting(false);
-          toast("Thêm mới thành công");
+          try {
+            if (typeof values.gender === "string") {
+              values.gender = parseInt(values.gender);
+            }
+            customerService.save(values);
+            setSubmitting(false);
+            toast("Thêm mới thành công");
+            navigate("/customer");
+          } catch (error) {
+            toast("Thêm mới thất bại");
+            setSubmitting(false);
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -129,7 +153,9 @@ function CustomerAddForm() {
                   <label htmlFor="typeId">Loại khách</label>
                   <Field as="select" name="typeId">
                     {customerType.map((type) => (
-                      <option key={type.id} value={type.id}>{type.name}</option>
+                      <option key={type.id} value={type.id}>
+                        {type.name}
+                      </option>
                     ))}
                   </Field>
                 </div>

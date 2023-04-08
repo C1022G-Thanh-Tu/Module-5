@@ -5,36 +5,47 @@ import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { customerType } from "./CustomerType";
+import customerTypeService from "../../service/customer/customerTypeService";
+import customerService from "../../service/customer/customerService";
 
 function CustomerEditForm() {
-  // let navigate = useNavigate();
-  // const param = useParams();
+  let navigate = useNavigate();
+  const param = useParams();
   const [customer, setCustomer] = useState();
-  // useEffect(() => {
-  //   const getCustomerDetail = async () => {
-  //     const CustomerDetail = await customerService.findById(param.id);
-  //     setCustomer(CustomerDetail.data);
-  //   };
-  //   getCustomerDetail();
-  // }, [param.id]);
+  const [customerType, setCustomerType] = useState([])
+  useEffect(() => {
+    const getCustomerDetail = async () => {
+      const CustomerDetail = await customerService.findById(param.id);
+      setCustomer(CustomerDetail.data);
+    };
+    getCustomerDetail();
+  }, [param.id]);
 
-  // if (!customer) {
-  //   return (
-  //     <Oval
-  //       height={80}
-  //       width={80}
-  //       color="#4fa94d"
-  //       wrapperStyle={{}}
-  //       wrapperClassName=""
-  //       visible={true}
-  //       ariaLabel="oval-loading"
-  //       secondaryColor="#4fa94d"
-  //       strokeWidth={2}
-  //       strokeWidthSecondary={2}
-  //     />
-  //   );
-  // }
+  useEffect(() => {
+    getCustomerTypeList()
+  }, [])
+
+  const getCustomerTypeList = async () => {
+    const customerTypeData = await customerTypeService.findAll()
+    setCustomerType(customerTypeData.data)
+  }
+
+  if (!customer) {
+    return (
+      <Oval
+        height={80}
+        width={80}
+        color="#4fa94d"
+        wrapperStyle={{}}
+        wrapperClassName=""
+        visible={true}
+        ariaLabel="oval-loading"
+        secondaryColor="#4fa94d"
+        strokeWidth={2}
+        strokeWidthSecondary={2}
+      />
+    );
+  }
 
   return (
     <>
@@ -74,9 +85,19 @@ function CustomerEditForm() {
             ),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
-          setSubmitting(false);
-          toast("Thêm mới thành công");
+          try {
+            if (typeof values.gender === "string" && typeof values.typeId === "string") {
+              values.gender = parseInt(values.gender);
+              values.typeId = parseInt(values.typeId);
+            }
+            customerService.edit(values);
+            setSubmitting(false);
+            toast("Sửa thông tin khách hàng thành công");
+            navigate("/customer");
+          } catch (error) {
+            toast("Sửa thông tin khách hàng thất bại");
+            setSubmitting(false);
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -116,6 +137,7 @@ function CustomerEditForm() {
                       id="men"
                       name="gender"
                       value="0"
+                      check={customer.gender === 0}
                     />
                     <label htmlFor="men">Nam</label>
                     <Field
@@ -124,6 +146,7 @@ function CustomerEditForm() {
                       id="women"
                       name="gender"
                       value="1"
+                      check={customer.gender === 1}
                     />
                     <label htmlFor="women">Nữ</label>
                   </div>
