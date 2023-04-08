@@ -2,11 +2,11 @@
   "customers": [
     {
       "id": 2,
-      "name": "abc",
-      "dateOfBirth": "2020/12/12",
+      "name": "Tu Ny",
+      "dateOfBirth": "2023-04-07",
       "gender": 0,
-      "identityNumb": "00956",
-      "phoneNumb": "090123",
+      "identityNumb": "009561231",
+      "phoneNumb": "0901231123",
       "email": "123@gmail.com",
       "typeId": 2,
       "address": "abc"
@@ -21,6 +21,17 @@
       "email": "123@gmail.com",
       "typeId": 3,
       "address": "abc"
+    },
+    {
+      "name": "Tu Nt",
+      "dateOfBirth": "2023-04-06",
+      "gender": 0,
+      "identityNumb": "687654123",
+      "phoneNumb": "0901232334",
+      "email": "ottovinh080198@gmail.com",
+      "typeId": 1,
+      "address": "Bình Dương ",
+      "id": 4
     }
   ],
   "customerTypes": [

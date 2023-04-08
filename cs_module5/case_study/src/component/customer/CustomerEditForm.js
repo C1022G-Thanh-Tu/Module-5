@@ -54,7 +54,7 @@ function CustomerEditForm() {
           id: customer?.id,
           name: customer?.name,
           dateOfBirth: customer?.dateOfBirth,
-          gender: customer?.gender,
+          gender: customer?.gender.toString(),
           identityNumb: customer?.identityNumb,
           phoneNumb: customer?.phoneNumb,
           email: customer?.email,
@@ -137,7 +137,7 @@ function CustomerEditForm() {
                       id="men"
                       name="gender"
                       value="0"
-                      check={customer.gender === 0}
+                      check={customer.gender === '0'}
                     />
                     <label htmlFor="men">Nam</label>
                     <Field
@@ -146,7 +146,7 @@ function CustomerEditForm() {
                       id="women"
                       name="gender"
                       value="1"
-                      check={customer.gender === 1}
+                      check={customer.gender === '1'}
                     />
                     <label htmlFor="women">Nữ</label>
                   </div>
