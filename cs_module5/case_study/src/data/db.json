@@ -47,7 +47,44 @@
       "address": "Vũng Tàu",
       "customer": "customer",
       "id": 5
+    },
+    {
+      "name": "Thanh",
+      "dateOfBirth": "2023-04-15",
+      "gender": "0",
+      "identityNumb": "687654678",
+      "phoneNumb": "0901232334",
+      "email": "admin@gmail.com",
+      "typeId": 1,
+      "address": "Vũng Tàu",
+      "customer": "customer",
+      "id": 6
+    },
+    {
+      "name": "Thanh",
+      "dateOfBirth": "2023-04-15",
+      "gender": "0",
+      "identityNumb": "687654678",
+      "phoneNumb": "0901232334",
+      "email": "admin@gmail.com",
+      "typeId": 1,
+      "address": "Vũng Tàu",
+      "customer": "customer",
+      "id": 7
+    },
+    {
+      "name": "Thanh",
+      "dateOfBirth": "2023-04-15",
+      "gender": "0",
+      "identityNumb": "687654678",
+      "phoneNumb": "0901232334",
+      "email": "admin@gmail.com",
+      "typeId": 1,
+      "address": "Vũng Tàu",
+      "customer": "customer",
+      "id": 8
     }
+    
   ],
   "customerTypes": [
     {

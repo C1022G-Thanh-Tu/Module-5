@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import customerService from "../../service/customer/customerService";
 import customerTypeService from "../../service/customer/customerTypeService";
 import ModalDelete from "../modal/modalDelete";
+import { Formik, Form, Field } from "formik";
+import ReactPaginate from "react-paginate";
 
 function CustomerList() {
   const [customerList, setCustomerList] = useState([]);
@@ -10,6 +12,24 @@ function CustomerList() {
   const [deletedId, setDeleteId] = useState(0);
   const [deletedName, setDeleteName] = useState("");
   const [deletedType, setDeleteType] = useState("");
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 3;
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    console.log('endOffset',endOffset);
+    setCurrentItems(customerList.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(customerList.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, customerList]);
+
+  const handlePageClick = (event) => {
+    console.log("event.selected", event.selected);
+    const newOffset = (event.selected * itemsPerPage) % customerList.length;
+    console.log("newOffset", newOffset);
+    setItemOffset(newOffset);
+  };
 
   useEffect(() => {
     getCustomerList();
@@ -17,7 +37,7 @@ function CustomerList() {
   }, []);
 
   const getCustomerList = async () => {
-    const customerData = await customerService.findAll();
+    const customerData = await customerService.findByName({ search: "" });
     setCustomerList(customerData.data);
   };
 
@@ -34,6 +54,9 @@ function CustomerList() {
 
   return (
     <>
+    {console.log('currentItems',currentItems)}
+    {console.log('itemOffset',itemOffset)}
+    {console.log('pageCount',pageCount)}
       <div style={{ maxWidth: 2000, marginTop: 70 }}>
         <div className="heading-img">
           <h3>KHÁCH HÀNG</h3>
@@ -54,7 +77,10 @@ function CustomerList() {
           >
             Danh sách khách hàng
           </div>
-          <div className="element-button mb-5" style={{display: 'inline-block'}}>
+          <div
+            className="element-button mb-5"
+            style={{ display: "inline-block" }}
+          >
             <Link
               className="btn btn-add btn-sm bg-success text-white"
               to="/customer-add"
@@ -63,28 +89,48 @@ function CustomerList() {
               Tạo mới khách hàng
             </Link>
           </div>
-          <div
-            className="search-btn col-2"
-            style={{ float: "right"}}
+          <Formik
+            initialValues={{
+              search: "",
+            }}
+            onSubmit={(values) => {
+              const getCustomersByName = async () => {
+                const customerData = await customerService.findByName(
+                  values.search
+                );
+                setCustomerList(customerData.data);
+              };
+              getCustomersByName();
+            }}
           >
-            <div className="input-group">
-              <input
-                className="form-control border-end-0 border"
-                type="search"
-                placeholder="Tìm kiếm"
-                name="search"
-                id="search"
-              />
-              <span className="input-group-append">
-                <button
-                  className="btn bg-white border-start-0 border-bottom-0 border ms-n5"
-                  type="button"
-                >
-                  <i className="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-          </div>
+            <Form
+              className="col-4"
+              style={{ float: "right", width: "100%", padding: "0" }}
+            >
+              <div className="search-btn">
+                <div className="input-group">
+                  <Field
+                    style={{ border: "1px solid" }}
+                    className="form-control"
+                    type="search"
+                    name="search"
+                    id="search"
+                    placeholder="tìm kiếm"
+                  />
+                  <span className="input-group-append">
+                    <button
+                      style={{ border: "1px solid" }}
+                      className="btn bg-white"
+                      type="submit"
+                    >
+                      <i className="fa fa-search"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </Form>
+          </Formik>
+
           <div className="row">
             <table className="table table-striped">
               <thead>
@@ -102,7 +148,7 @@ function CustomerList() {
                 </tr>
               </thead>
               <tbody>
-                {customerList.map((customer, index) => (
+                {currentItems.map((customer, index) => (
                   <tr key={customer.id}>
                     <th scope="row">{++index}</th>
                     <td>{customer.name}</td>
@@ -146,45 +192,30 @@ function CustomerList() {
                 ))}
               </tbody>
             </table>
-            <ModalDelete
-              id={deletedId}
-              name={deletedName}
-              type={deletedType}
-              getList={() => {
-                getCustomerList();
-              }}
+          </div>
+          <ModalDelete
+            id={deletedId}
+            name={deletedName}
+            type={deletedType}
+            getList={() => {
+              getCustomerList();
+            }}
+          />
+          <div className="d-grid">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              pageCount={pageCount}
+              previousLabel="< "
+              renderOnZeroPageCount={null}
+              containerClassName="pagination"
+              pageLinkClassName="page-num"
+              nextLinkClassName="page-num"
+              previousLinkClassName="page-num"
+              activeClassName="active"
             />
-            <div className="mt-5">
-              <nav aria-label="Page navigation example">
-                <ul className="pagination justify-content-center">
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      <i className="ti-angle-left"></i>
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      <i className="ti-angle-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
           </div>
         </div>
       </div>

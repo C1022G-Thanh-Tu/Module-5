@@ -4,6 +4,10 @@ const findAll = () => {
   return request.get(`/customers`);
 };
 
+const findByName = (search) => {
+  return request.get(`/customers?name_like=${search}`);
+}
+
 const save = (customer) => {
   request.post('/customers', {...customer})
 } 
@@ -25,7 +29,8 @@ const customerService = {
   save,
   remove,
   findById,
-  edit
+  edit,
+  findByName
 };
 
 
