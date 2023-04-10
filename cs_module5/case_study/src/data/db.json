@@ -2,7 +2,7 @@
   "customers": [
     {
       "id": 2,
-      "name": "Tu Ny",
+      "name": "Tu Nyo",
       "dateOfBirth": "2023-04-07",
       "gender": "1",
       "identityNumb": "009561231",
@@ -35,6 +35,18 @@
       "address": "Bình Dương ",
       "id": 4,
       "customer": "customer"
+    },
+    {
+      "name": "Thanh",
+      "dateOfBirth": "2023-04-15",
+      "gender": "0",
+      "identityNumb": "687654678",
+      "phoneNumb": "0901232334",
+      "email": "admin@gmail.com",
+      "typeId": 1,
+      "address": "Vũng Tàu",
+      "customer": "customer",
+      "id": 5
     }
   ],
   "customerTypes": [
@@ -84,10 +96,6 @@
       "facitilyMaxPeople": "5",
       "facilityRentalType": "Ngày",
       "facilityTypeId": "2",
-      "villaStandard": "",
-      "villaOtherAminities": "",
-      "villaPoolArea": "",
-      "villaNumbOfFloor": "",
       "houseStandard": "vip",
       "houseOtherAminities": "Thuê xe máy / xe đạp",
       "houseNumbOfFloor": "3",
@@ -103,7 +111,7 @@
       "facilityImg": "img/Vietnam_Danang_Furama_Ocean-Suite-Feature-370x239.jpg",
       "facilityName": "PHÒNG SUITE HƯỚNG BIỂN",
       "facilityArea": "Diện tích phòng: 85.8 m2",
-      "facilityRentalCost": "20000",
+      "facilityRentalCost": "20001",
       "facitilyMaxPeople": "5",
       "facilityRentalType": "Ngày",
       "facilityTypeId": "3",
@@ -114,7 +122,7 @@
       "houseStandard": "",
       "houseOtherAminities": "",
       "houseNumbOfFloor": "",
-      "villaFreeAminities": "buffet sáng",
+      "roomFreeAminities": "Bufect Sáng",
       "facilityAminities": [
         "1",
         "3"

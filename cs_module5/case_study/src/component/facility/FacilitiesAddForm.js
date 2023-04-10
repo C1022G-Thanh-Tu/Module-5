@@ -296,7 +296,7 @@ function FacilitiesAddForm() {
                     </div>
                     <div className="col-6 px-0">
                       <Field
-                        type="number"
+                        type="text"
                         style={{ borderRadius: 5 }}
                         name="facitilyMaxPeople"
                       />
@@ -458,7 +458,7 @@ function FacilitiesAddForm() {
                       <div className="col-6 px-0">
                         <Field
                           name="villaNumbOfFloor"
-                          type="number"
+                          type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
@@ -526,7 +526,7 @@ function FacilitiesAddForm() {
                       <div className="col-6 px-0">
                         <Field
                           name="houseNumbOfFloor"
-                          type="number"
+                          type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage

@@ -15,6 +15,7 @@ function FacilitiesEditForm() {
   const [facility, setFacility] = useState();
   const [aminities, setAminities] = useState([]);
   const [facilityType, setFacilityType] = useState([]);
+  const [type, setType] = useState();
   const [validation, setValidation] = useState(
     Yup.object({
       facilityImg: Yup.string(),
@@ -47,7 +48,7 @@ function FacilitiesEditForm() {
     houseOtherAminities: Yup.string(),
     houseNumbOfFloor: Yup.string(),
     roomFreeAminities: Yup.string(),
-  })
+  });
 
   const villaValidationSchema = Yup.object({
     facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
@@ -94,8 +95,32 @@ function FacilitiesEditForm() {
   });
 
   useEffect(() => {
+    const villa = document.getElementById("villa");
+    const room = document.getElementById("room");
+    const house = document.getElementById("house");
+    switch (type) {
+      case "1":
+        villa.style.display = "block";
+        house.style.display = "none";
+        room.style.display = "none";
+        break;
+      case "2":
+        villa.style.display = "none";
+        house.style.display = "block";
+        room.style.display = "none";
+        break;
+      case "3":
+        villa.style.display = "none";
+        house.style.display = "none";
+        room.style.display = "block";
+        break;
+    }
+  }, [type]);
+
+  useEffect(() => {
     const getFacilityDetail = async () => {
       const facilityDetail = await facilityService.findById(param.id);
+      setType(facilityDetail.data.facilityTypeId)
       setFacility(facilityDetail.data);
     };
     getFacilityDetail();
@@ -140,7 +165,7 @@ function FacilitiesEditForm() {
 
     switch (event.currentTarget.value) {
       case "0":
-        setValidation(defaultValidationSchem)
+        setValidation(defaultValidationSchem);
         villa.style.display = "none";
         house.style.display = "none";
         room.style.display = "none";
@@ -170,7 +195,6 @@ function FacilitiesEditForm() {
 
   return (
     <>
-      <h1>abc</h1>
       <Formik
         initialValues={{
           id: facility?.id,
@@ -192,16 +216,43 @@ function FacilitiesEditForm() {
           facilityAminities: facility?.facilityAminities,
           facility: facility?.facility,
         }}
-
+        
         validationSchema={validation}
 
         onSubmit={(values, { setSubmitting }) => {
           try {
-            facilityService.edit(values)
-            toast("Thêm mới thành công");
+            switch (values.facilityTypeId) {
+              case "1":
+                values.houseStandard = ""
+                values.houseNumbOfFloor = ""
+                values.houseOtherAminities = ""
+                values.roomFreeAminities = ""
+                break;
+              case "2":
+                values.villaStandard = ""
+                values.villaNumbOfFloor = ""
+                values.villaOtherAminities = ""
+                values.villaPoolArea = ""
+                values.roomFreeAminities = ""
+                break;
+              case "3":
+                values.houseStandard = ""
+                values.houseNumbOfFloor = ""
+                values.houseOtherAminities = ""
+                values.villaStandard = ""
+                values.villaNumbOfFloor = ""
+                values.villaOtherAminities = ""
+                values.villaPoolArea = ""
+              default:
+                break;
+            }
+            console.log('facility',facility);
+            console.log('values', values);
+            facilityService.edit(values);
+            toast("Sửa thành công");
             navigate("/facility");
           } catch (error) {
-            toast("Thêm mới thất bại");
+            toast("Sửa thất bại");
           }
           setSubmitting(false);
         }}
@@ -320,7 +371,7 @@ function FacilitiesEditForm() {
                     </div>
                     <div className="col-6 px-0">
                       <Field
-                        type="number"
+                        type="text"
                         style={{ borderRadius: 5 }}
                         name="facitilyMaxPeople"
                       />
@@ -406,7 +457,6 @@ function FacilitiesEditForm() {
                       </Field>
                     </div>
                   </div>
-                  {/* { type == "0"} */}
                   <div id="villa" style={{ display: "none" }}>
                     <div className="d-flex mb-3 row">
                       <div className="col-6 pe-0 d-flex align-items-center">
@@ -486,7 +536,7 @@ function FacilitiesEditForm() {
                       <div className="col-6 px-0">
                         <Field
                           name="villaNumbOfFloor"
-                          type="number"
+                          type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
@@ -554,7 +604,7 @@ function FacilitiesEditForm() {
                       <div className="col-6 px-0">
                         <Field
                           name="houseNumbOfFloor"
-                          type="number"
+                          type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
