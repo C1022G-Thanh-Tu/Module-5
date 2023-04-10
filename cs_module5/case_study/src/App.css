@@ -236,7 +236,9 @@ button:hover {
   font-size: 1.2rem;
   gap: 5px;
 }
-.pagination .page-num {
+.pagination .page-num,
+.pagination .page-previous,
+.pagination .page-next {
   padding: 8px 15px;
   cursor: pointer;
   border-radius: 3px;
@@ -244,7 +246,9 @@ button:hover {
   display: block;
 }
 
-.pagination .page-num:hover {
+.pagination .page-num:hover,
+.pagination .page-previous,
+.pagination .page-next {
   background-color: #5AB1BB;
   color: white;
 }

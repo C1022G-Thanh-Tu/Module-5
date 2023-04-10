@@ -3,11 +3,48 @@ import customerService from "../../service/customer/customerService";
 import facilityService from "../../service/facility/facilityService";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { Formik, Form, Field } from "formik";
 
 function ContractList() {
   const [contractList, setContractList] = useState([]);
   const [customerList, setCustomerList] = useState([]);
   const [facilitiesList, setFacilitiesList] = useState([]);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 3;
+  let stt = itemOffset;
+
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(contractList.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(contractList.length / itemsPerPage));
+    let firstPage = document.querySelector(".page-next");
+    let lastPage = document.querySelector(".page-previous");
+    if (firstPage != null && lastPage != null) {
+      if (itemOffset == 0) {
+        if (endOffset >= contractList.length) {
+          firstPage.style.display = "none";
+          lastPage.style.display = "none";
+        } else {
+          firstPage.style.display = "none";
+          lastPage.style.display = "block";
+        }
+      } else if (endOffset > contractList.length) {
+        firstPage.style.display = "block";
+        lastPage.style.display = "none";
+      } else {
+        firstPage.style.display = "block";
+        lastPage.style.display = "block";
+      }
+    }
+  }, [itemOffset, itemsPerPage, contractList]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % contractList.length;
+    setItemOffset(newOffset);
+  };
 
   useEffect(() => {
     getContractList();
@@ -16,7 +53,7 @@ function ContractList() {
   }, []);
 
   const getContractList = async () => {
-    const contractData = await contractService.findAll();
+    const contractData = await contractService.contractCode({ search: "" });
     setContractList(contractData.data);
   };
 
@@ -51,15 +88,59 @@ function ContractList() {
           >
             Danh sách hợp đồng
           </div>
-          <div className="element-button mb-5">
+          <div
+            className="element-button mb-5"
+            style={{ display: "inline-block" }}
+          >
             <Link
               className="btn btn-add btn-sm bg-success text-white"
-              to='/contract-add'
+              to="/contract-add"
             >
               <i className="fas fa-plus" />
               Tạo mới hợp đồng
             </Link>
           </div>
+          <Formik
+            initialValues={{
+              search: "",
+            }}
+            onSubmit={(values) => {
+              const getContractsByName = async () => {
+                const contractData = await contractService.findByName(
+                  values.search
+                );
+                setContractList(contractData.data);
+              };
+              getContractsByName();
+            }}
+          >
+            <Form
+              className="col-4"
+              style={{ float: "right", width: "100%", padding: "0" }}
+            >
+              <div className="search-btn">
+                <div className="input-group">
+                  <Field
+                    style={{ border: "1px solid" }}
+                    className="form-control"
+                    type="search"
+                    name="search"
+                    id="search"
+                    placeholder="tìm kiếm"
+                  />
+                  <span className="input-group-append">
+                    <button
+                      style={{ border: "1px solid" }}
+                      className="btn bg-white"
+                      type="submit"
+                    >
+                      <i className="fa fa-search"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </Form>
+          </Formik>
           <div className="row">
             <table className="table table-striped">
               <thead>
@@ -75,8 +156,8 @@ function ContractList() {
                 </tr>
               </thead>
               <tbody>
-                {contractList.map((contract) => (
-                  <tr key={contract.id}>
+                {currentItems.map((contract) => (
+                  <tr key={++stt}>
                     <th scope="row">{contract.id}</th>
                     <td>{contract.contractCode}</td>
                     <td>
@@ -101,37 +182,22 @@ function ContractList() {
                 ))}
               </tbody>
             </table>
-            <div className="mt-5">
-              <nav aria-label="Page navigation example">
-                <ul className="pagination justify-content-center">
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      <i className="ti-angle-left"></i>
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li className="page-item">
-                    <a className="page-link" href="#">
-                      <i className="ti-angle-right"></i>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
+          </div>
+          <div className="d-grid">
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              pageCount={pageCount}
+              previousLabel="< "
+              renderOnZeroPageCount={null}
+              containerClassName="pagination"
+              pageLinkClassName="page-num"
+              nextLinkClassName="page-previous"
+              previousLinkClassName="page-next"
+              activeClassName="active"
+            />
           </div>
         </div>
       </div>

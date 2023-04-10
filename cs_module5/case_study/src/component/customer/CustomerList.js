@@ -16,18 +16,35 @@ function CustomerList() {
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 3;
+  let stt = itemOffset;
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-    console.log('endOffset',endOffset);
     setCurrentItems(customerList.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(customerList.length / itemsPerPage));
+    let firstPage = document.querySelector(".page-next");
+    let lastPage = document.querySelector(".page-previous");
+    if (firstPage != null && lastPage != null) {
+      if (itemOffset == 0) {
+        if (endOffset >= customerList.length) {
+          firstPage.style.display = "none";
+          lastPage.style.display = "none";
+        } else {
+          firstPage.style.display = "none";
+          lastPage.style.display = "block";
+        }
+      } else if (endOffset > customerList.length) {
+        firstPage.style.display = "block";
+        lastPage.style.display = "none";
+      } else {
+        firstPage.style.display = "block";
+        lastPage.style.display = "block";
+      }
+    }
   }, [itemOffset, itemsPerPage, customerList]);
 
   const handlePageClick = (event) => {
-    console.log("event.selected", event.selected);
     const newOffset = (event.selected * itemsPerPage) % customerList.length;
-    console.log("newOffset", newOffset);
     setItemOffset(newOffset);
   };
 
@@ -54,9 +71,6 @@ function CustomerList() {
 
   return (
     <>
-    {console.log('currentItems',currentItems)}
-    {console.log('itemOffset',itemOffset)}
-    {console.log('pageCount',pageCount)}
       <div style={{ maxWidth: 2000, marginTop: 70 }}>
         <div className="heading-img">
           <h3>KHÁCH HÀNG</h3>
@@ -132,7 +146,10 @@ function CustomerList() {
           </Formik>
 
           <div className="row">
-            <table className="table table-striped">
+            <table
+              className="table table-striped"
+              style={{ boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)" }}
+            >
               <thead>
                 <tr>
                   <th scope="col">STT</th>
@@ -148,9 +165,9 @@ function CustomerList() {
                 </tr>
               </thead>
               <tbody>
-                {currentItems.map((customer, index) => (
+                {currentItems.map((customer) => (
                   <tr key={customer.id}>
-                    <th scope="row">{++index}</th>
+                    <th scope="row">{++stt}</th>
                     <td>{customer.name}</td>
                     <td>{customer.dateOfBirth}</td>
                     <td>{parseInt(customer.gender) === 0 ? "nam" : "nữ"}</td>
@@ -212,8 +229,8 @@ function CustomerList() {
               renderOnZeroPageCount={null}
               containerClassName="pagination"
               pageLinkClassName="page-num"
-              nextLinkClassName="page-num"
-              previousLinkClassName="page-num"
+              nextLinkClassName="page-previous"
+              previousLinkClassName="page-next"
               activeClassName="active"
             />
           </div>
