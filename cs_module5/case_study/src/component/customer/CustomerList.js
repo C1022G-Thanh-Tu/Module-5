@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom'
 import customerService from "../../service/customer/customerService";
 import customerTypeService from "../../service/customer/customerTypeService";
 import ModalDelete from '../modal/modalDelete';
+
 function CustomerList() {
   const [customerList, setCustomerList] = useState([])
   const [customerType, setCustomerType] = useState([])
   const [deletedId, setDeleteId] = useState(0)
   const [deletedName, setDeleteName] = useState("")
+  const [deletedType, setDeleteType] = useState("")
 
   useEffect(() => {
     getCustomerList()
@@ -25,9 +27,10 @@ function CustomerList() {
     setCustomerType(customerTypeData.data)
   }
 
-  const transferInfo = (id, name) => {
+  const transferInfo = (id, name, type) => {
     setDeleteId(id)
     setDeleteName(name)
+    setDeleteType(type)
   }
 
   return (
@@ -84,7 +87,7 @@ function CustomerList() {
                     <td>{customer.name}</td>
                     <td>{customer.dateOfBirth}</td>
                     <td>
-                      {customer.gender === 0 ? 'nam' : 'nữ'}
+                      {parseInt(customer.gender) === 0 ? 'nam' : 'nữ'}
                       </td>
                     <td>{customer.identityNumb}</td>
                     <td>{customer.phoneNumb}</td>
@@ -92,8 +95,8 @@ function CustomerList() {
                     <td>
                       {
                         customerType.filter(
-                          (type) => type.id === customer.typeId
-                        )[0].name
+                          (type) => type.id === parseInt(customer.typeId) 
+                        )[0]?.name
                       }
                     </td>
                     <td>{customer.address}</td>
@@ -103,7 +106,7 @@ function CustomerList() {
                         className="btn btn-danger me-2"
                         data-bs-toggle="modal" 
                         data-bs-target="#exampleModal"
-                        onClick={() => transferInfo(customer.id, customer.name)}
+                        onClick={() => transferInfo(customer.id, customer.name, customer.customer)}
                       >
                         <i className="fas fa-trash-alt"></i>
                       </button>
@@ -121,6 +124,7 @@ function CustomerList() {
             <ModalDelete
               id = {deletedId}
               name = {deletedName}
+              type = {deletedType}
               getList = {() => {
                 getCustomerList()
               }}

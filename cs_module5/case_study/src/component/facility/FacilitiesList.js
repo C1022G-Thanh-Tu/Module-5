@@ -1,7 +1,29 @@
-import facilitiesList from "./Facilities";
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import facilityService from "../../service/facility/facilityService";
+import ModalDelete from "../modal/modalDelete";
 
 function FacilitiesList() {
+  const [facilitiesList, setFacilitiesList] = useState([]);
+  const [deletedId, setDeleteId] = useState(0);
+  const [deletedName, setDeleteName] = useState("");
+  const [deletedType, setDeleteType] = useState("")
+
+  useEffect(() => {
+    getAllFacilities();
+  }, []);
+
+  const getAllFacilities = async () => {
+    const facilityData = await facilityService.findAll();
+    setFacilitiesList(facilityData.data);
+  };
+
+  const transferInfo = (id, name, type) => {
+    setDeleteId(id)
+    setDeleteName(name)
+    setDeleteType(type)
+  }
+
   return (
     <>
       <div style={{ maxWidth: "2000px", marginTop: "70px" }}>
@@ -13,7 +35,7 @@ function FacilitiesList() {
           <div className="element-button mb-5">
             <Link
               className="btn btn-add btn-sm bg-success text-white"
-              to='/facility-add'
+              to="/facility-add"
             >
               <i className="fas fa-plus"></i>
               Tạo mới dịch vụ
@@ -21,7 +43,7 @@ function FacilitiesList() {
           </div>
           <div className="row">
             {facilitiesList.map((facility, index) => (
-              <div className="col-4" key={index}>
+              <div className="col-4 mb-3" key={index}>
                 <div className="card">
                   <img
                     src={facility.facilityImg}
@@ -37,8 +59,11 @@ function FacilitiesList() {
                       style={{ marginRight: "5px" }}
                       type="button"
                       className="btn btn-danger"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      onClick={() =>
+                        transferInfo(facility.id, facility.facilityName, facility.facility)
+                      }
                     >
                       <i className="fas fa-trash-alt"></i>
                     </button>
@@ -53,6 +78,14 @@ function FacilitiesList() {
               </div>
             ))}
           </div>
+          <ModalDelete
+            id={deletedId}
+            name={deletedName}
+            type = {deletedType}
+            getList={() => {
+              getAllFacilities();
+            }}
+          />
           <div className="mt-5">
             <nav aria-label="Page navigation example">
               <ul className="pagination justify-content-center">

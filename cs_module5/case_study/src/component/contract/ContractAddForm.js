@@ -1,55 +1,165 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Oval } from "react-loader-spinner";
+import { Link, useNavigate } from "react-router-dom";
+import customerService from "../../service/customer/customerService";
+import facilityService from "../../service/facility/facilityService";
+import { useEffect, useState } from "react";
+
 function ContractAddForm() {
+  let navigate = useNavigate();
+  const [customerList, setCustomerList] = useState([]);
+  const [facilitiesList, setFacilitiesList] = useState([]);
+
+  useEffect(() => {
+    getCustomerList();
+    getFacilitiesList();
+  }, []);
+
+  // useEffect(() => {
+  //   getFacilitiesList();
+  // }, []);
+
+  // useEffect(() => {
+  //   getCustomerList();
+  // }, []);
+
+  const getCustomerList = async () => {
+    const customerData = await customerService.findAll();
+    setCustomerList(customerData.data);
+    console.log("customerData.data", customerData.data);
+  };
+
+  const getFacilitiesList = async () => {
+    const facilityData = await facilityService.findAll();
+    setFacilitiesList(facilityData.data);
+  };
+
+  // if (!customerList || !facilitiesList) {
+  //   return (
+  //     <Oval
+  //       height={80}
+  //       width={80}
+  //       color="#4fa94d"
+  //       wrapperStyle={{}}
+  //       wrapperClassName=""
+  //       visible={true}
+  //       ariaLabel="oval-loading"
+  //       secondaryColor="#4fa94d"
+  //       strokeWidth={2}
+  //       strokeWidthSecondary={2}
+  //     />
+  //   );
+  // }
+
   return (
     <>
-      <div className="testbox" style="margin-top: 70px;">
-        <div className="">
-          <h1>Thêm mới hợp đồng</h1>
-          <div className="item">
-            <label htmlFor="contract-code">Số hợp đồng</label>
-            <input
-              type="text"
-              name="contract-code"
-              placeholder=""
-              id="contract-code"
-            />
-          </div>
-          <div className="item">
-            <label htmlFor="customers">Khách hàng</label>
-            <input type="text" name="customers" id="customers" />
-          </div>
-          <div className="item">
-            <label htmlFor="facilities">Dịch vụ</label>
-            <input type="text" name="facilities" id="facilities" />
-          </div>
-          <div className="item">
-            <label htmlFor="start-date">Ngày bắt đầu</label>
-            <input type="date" name="start-date" id="start-date" required />
-          </div>
-          <div className="item">
-            <label htmlFor="end-date">Ngày kết thúc</label>
-            <input type="date" name="end-date" id="end-date" required />
-          </div>
-          <div className="item">
-            <label htmlFor="deposit">Số tiền cọc trước</label>
-            <input type="text" name="deposit" id="deposit" />
-          </div>
-          <div className="item">
-            <label htmlFor="total-payment">Tổng số tiền thanh toán</label>
-            <input type="text" name="total-payment" id="total-payment" />
-          </div>
-          <div className="btn-block">
-            <button type="button" style="background-color: #198754">
-              Sửa
-            </button>
-            <button type="button" style="background-color: #0d6efd">
-              Thoát
-            </button>
-          </div>
-        </div>
-      </div>
+      {console.log("customerList", customerList)}
+      {console.log("facilitiesList", facilitiesList)}
+      <Formik
+        initialValues={{
+          customerId: "",
+          facilitiyId: "",
+          contractCode: "",
+          startDate: "",
+          endDate: "",
+          deposit: "",
+          totalMoney: "",
+        }}
+        onSubmit={(value, { setSubmitting }) => {
+          console.log(value);
+          toast("Thêm mới thành công");
+          setSubmitting(false);
+        }}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="testbox" style={{ marginTop: 70 }}>
+              <div className="">
+                <h1>Thêm mới hợp đồng</h1>
+                <div className="item">
+                  <label htmlFor="contractCode">Số hợp đồng</label>
+                  <Field type="text" name="contractCode" id="contractCode" />
+                </div>
+                <div className="item">
+                  <label htmlFor="customerId">Khách hàng</label>
+                  <Field as="select" name="customerId" id="customerId">
+                    {customerList.map((customer) => {
+                      <option key={customer.id} value={customer.id}>
+                        {customer.name}
+                      </option>;
+                    })}
+                  </Field>
+                </div>
+                <div className="item">
+                  <label htmlFor="facilitiyId">Dịch vụ</label>
+                  <Field as="select" name="facilitiyId" id="facilitiyId">
+                    {facilitiesList.map((facility) => {
+                      <option key={facility.id} value={facility.id}>
+                        {facility.facilityName}
+                      </option>;
+                    })}
+                  </Field>
+                </div>
+                <div className="item">
+                  <label htmlFor="startDate">Ngày bắt đầu</label>
+                  <Field
+                    type="date"
+                    name="startDate"
+                    id="startDate"
+                    required=""
+                  />
+                </div>
+                <div className="item">
+                  <label htmlFor="endDate">Ngày kết thúc</label>
+                  <Field type="date" name="endDate" id="endDate" required="" />
+                </div>
+                <div className="item">
+                  <label htmlFor="deposit">Số tiền cọc trước</label>
+                  <Field type="text" name="deposit" id="deposit" />
+                </div>
+                <div className="item">
+                  <label htmlFor="totalMoney">Tổng số tiền thanh toán</label>
+                  <Field type="text" name="totalMoney" id="totalMoney" />
+                </div>
+                <div className="btn-block">
+                  {isSubmitting ? (
+                    <Oval
+                      height={80}
+                      width={80}
+                      color="#4fa94d"
+                      wrapperStyle={{}}
+                      wrapperClassName=""
+                      visible={true}
+                      ariaLabel="oval-loading"
+                      secondaryColor="#4fa94d"
+                      strokeWidth={2}
+                      strokeWidthSecondary={2}
+                    />
+                  ) : (
+                    <>
+                      <button
+                        type="submit"
+                        style={{ marginRight: "10px" }}
+                        className="btn btn-success"
+                      >
+                        Thêm
+                      </button>
+                      <Link to="/contract" className="btn btn-primary">
+                        Thoát
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 }
-
 
 export default ContractAddForm;

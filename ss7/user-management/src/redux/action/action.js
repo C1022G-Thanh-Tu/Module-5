@@ -18,7 +18,8 @@ export const userDeleteAction = (id) => async (dispatch) => {
         await userManagementService.remove(id)
         alert ('deleted successful')
         dispatch ({
-            type: USER_DELETE_ACTION
+            type: USER_DELETE_ACTION,
+            payload: id
         })
     } catch (error) {
         console.log(error);

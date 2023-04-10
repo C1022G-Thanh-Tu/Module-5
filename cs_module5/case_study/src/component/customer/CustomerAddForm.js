@@ -34,6 +34,7 @@ function CustomerAddForm() {
           email: "",
           typeId: 1,
           address: "",
+          customer: "customer"
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -60,9 +61,9 @@ function CustomerAddForm() {
         })}
         onSubmit={(values, { setSubmitting }) => {
           try {
-            if (typeof values.gender === "string") {
-              values.gender = parseInt(values.gender);
-            }
+            // if (typeof values.gender === "string") {
+            //   values.gender = parseInt(values.gender);
+            // }
             customerService.save(values);
             setSubmitting(false);
             toast("Thêm mới thành công");

@@ -3,11 +3,110 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import { Link } from "react-router-dom";
-import aminities from "../facility/Aminities";
-import facilityType from "./FacilityType";
+import { Link, useNavigate } from "react-router-dom";
+import aminityService from "../../service/facility/aminityService";
+import facilityTypeService from "../../service/facility/facilityTypeService";
+import { useEffect, useState } from "react";
+import facilityService from "../../service/facility/facilityService";
 
 function FacilitiesAddForm() {
+  let navigate = useNavigate();
+
+  const [aminities, setAminities] = useState([]);
+  const [facilityType, setFacilityType] = useState([]);
+  const [validation, setValidation] = useState(
+    Yup.object({
+      facilityImg: Yup.string(),
+      facilityName: Yup.string(),
+      facilityArea: Yup.string(),
+      facilityRentalCost: Yup.string(),
+      facitilyMaxPeople: Yup.string(),
+      villaStandard: Yup.string(),
+      villaOtherAminities: Yup.string(),
+      villaPoolArea: Yup.string(),
+      villaNumbOfFloor: Yup.string(),
+      houseStandard: Yup.string(),
+      houseOtherAminities: Yup.string(),
+      houseNumbOfFloor: Yup.string(),
+      roomFreeAminities: Yup.string(),
+    })
+  );
+
+  const defaultValidationSchem = Yup.object({
+    facilityImg: Yup.string(),
+    facilityName: Yup.string(),
+    facilityArea: Yup.string(),
+    facilityRentalCost: Yup.string(),
+    facitilyMaxPeople: Yup.string(),
+    villaStandard: Yup.string(),
+    villaOtherAminities: Yup.string(),
+    villaPoolArea: Yup.string(),
+    villaNumbOfFloor: Yup.string(),
+    houseStandard: Yup.string(),
+    houseOtherAminities: Yup.string(),
+    houseNumbOfFloor: Yup.string(),
+    roomFreeAminities: Yup.string(),
+  })
+
+  const villaValidationSchema = Yup.object({
+    facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityName: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
+    facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
+    facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
+    villaStandard: Yup.string().required("Trường này bắt buộc nhập"),
+    villaOtherAminities: Yup.string().required("Trường này bắt buộc nhập"),
+    villaPoolArea: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^[1-9][\\d]*$", "Diện tích hồ bơi phải là số nguyên dương"),
+    villaNumbOfFloor: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
+  });
+
+  const houseValidationSchema = Yup.object({
+    facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityName: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
+    facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
+    facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
+    houseStandard: Yup.string().required("Trường này bắt buộc nhập"),
+    houseOtherAminities: Yup.string().required("Trường này bắt buộc nhập"),
+    houseNumbOfFloor: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
+  });
+
+  const roomValidationSchema = Yup.object({
+    facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityName: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
+    facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
+    facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
+    roomFreeAminities: Yup.string().required("Trường này bắt buộc nhập"),
+  });
+
+  useEffect(() => {
+    getAminities();
+    getFacilityTypes();
+  }, []);
+
+  const getAminities = async () => {
+    const aminityData = await aminityService.findAll();
+    setAminities(aminityData.data);
+  };
+
+  const getFacilityTypes = async () => {
+    const facilityTypeData = await facilityTypeService.findAll();
+    setFacilityType(facilityTypeData.data);
+  };
+
   const handleFacilityChanged = (event) => {
     const villa = document.getElementById("villa");
     const room = document.getElementById("room");
@@ -15,21 +114,25 @@ function FacilitiesAddForm() {
 
     switch (event.currentTarget.value) {
       case "0":
+        setValidation(defaultValidationSchem)
         villa.style.display = "none";
         house.style.display = "none";
         room.style.display = "none";
         break;
       case "1":
+        setValidation(villaValidationSchema);
         villa.style.display = "block";
         house.style.display = "none";
         room.style.display = "none";
         break;
       case "2":
+        setValidation(houseValidationSchema);
         villa.style.display = "none";
         house.style.display = "block";
         room.style.display = "none";
         break;
       case "3":
+        setValidation(roomValidationSchema);
         villa.style.display = "none";
         house.style.display = "none";
         room.style.display = "block";
@@ -50,45 +153,33 @@ function FacilitiesAddForm() {
           facitilyMaxPeople: "",
           facilityRentalType: "",
           facilityTypeId: "",
-          facilityStandard: "",
-          facilityOtherAminities: "",
-          facilityPoolArea: "",
-          facilityNumbOfFloor: "",
-          facilityFreeAminities: "",
-          facilityAminitiesid: [],
+          villaStandard: "",
+          villaOtherAminities: "",
+          villaPoolArea: "",
+          villaNumbOfFloor: "",
+          houseStandard: "",
+          houseOtherAminities: "",
+          houseNumbOfFloor: "",
+          roomFreeAminities: "",
+          facilityAminities: [],
+          facility: "facility",
         }}
-        validationSchema={Yup.object({
-          // facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
-          // facilityName: Yup.string()
-          //   .required("Trường này bắt buộc nhập")
-          //   .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
-          // facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
-          // facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
-          // facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
-          // facilityStandard: Yup.string().required("Trường này bắt buộc nhập"),
-          // facilityOtherAminities: Yup.string().required(
-          //   "Trường này bắt buộc nhập"
-          // ),
-          // facilityPoolArea: Yup.string()
-          //   .required("Trường này bắt buộc nhập")
-          //   .matches(
-          //     "^[1-9][\\d]*$",
-          //     "Diện tích hồ bơi phải là số nguyên dương"
-          //   ),
-          // facilityNumbOfFloor: Yup.string()
-          //   .required("Trường này bắt buộc nhập")
-          //   .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
-          // facilityFreeAminities: Yup.string().required(
-          //   "Trường này bắt buộc nhập"
-          // ),
-        })}
+
+        validationSchema={validation}
         onSubmit={(values, { setSubmitting }) => {
-          values.facilityAminitiesid = values.facilityAminitiesid.map((data) => (
-            parseInt(data)
-          ));
-          console.log(values);
-          setSubmitting(false);
-          toast("Thêm mới dịch vụ thành công");
+          // values.facilityAminitiesid = values.facilityAminitiesid.map((data) => (
+          //   parseInt(data)
+          // ));
+          // values.facilityTypeId = parseInt(values.facilityAminitiesid)
+          try {
+            facilityService.save(values);
+            setSubmitting(false);
+            toast("Sửa thông tin dịch vụ thành công");
+            navigate("/facility");
+          } catch (error) {
+            toast("Sửa thông tin dịch vụ thất bại");
+            setSubmitting(false);
+          }
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -139,7 +230,7 @@ function FacilitiesAddForm() {
                     </div>
                     <div className="col-6 px-0">
                       <Field
-                        type="file"
+                        type="text"
                         style={{ borderRadius: 5 }}
                         name="facilityImg"
                       />
@@ -274,9 +365,9 @@ function FacilitiesAddForm() {
                         onChange={(event) => {
                           handleFacilityChanged(event);
                           setFieldValue(
-                            'facilityTypeId',
+                            "facilityTypeId",
                             event.currentTarget.value
-                          )
+                          );
                         }}
                       >
                         <option value="0">Dịch vụ</option>
@@ -302,10 +393,10 @@ function FacilitiesAddForm() {
                         <Field
                           type="text"
                           style={{ borderRadius: 5 }}
-                          name="facilityStandard"
+                          name="villaStandard"
                         />
                         <ErrorMessage
-                          name="facilityStandard"
+                          name="villaStandard"
                           component="div"
                           className="text-danger"
                         />
@@ -322,12 +413,12 @@ function FacilitiesAddForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityOtherAminities"
+                          name="villaOtherAminities"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityOtherAminities"
+                          name="villaOtherAminities"
                           component="div"
                           className="text-danger"
                         />
@@ -344,12 +435,12 @@ function FacilitiesAddForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityPoolArea"
+                          name="villaPoolArea"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityPoolArea"
+                          name="villaPoolArea"
                           component="div"
                           className="text-danger"
                         />
@@ -366,12 +457,12 @@ function FacilitiesAddForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityNumbOfFloor"
+                          name="villaNumbOfFloor"
                           type="number"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityNumbOfFloor"
+                          name="villaNumbOfFloor"
                           component="div"
                           className="text-danger"
                         />
@@ -390,12 +481,12 @@ function FacilitiesAddForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityStandard"
+                          name="houseStandard"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityStandard"
+                          name="houseStandard"
                           component="div"
                           className="text-danger"
                         />
@@ -412,12 +503,12 @@ function FacilitiesAddForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityOtherAminities"
+                          name="houseOtherAminities"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityOtherAminities"
+                          name="houseOtherAminities"
                           component="div"
                           className="text-danger"
                         />
@@ -434,12 +525,12 @@ function FacilitiesAddForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityNumbOfFloor"
+                          name="houseNumbOfFloor"
                           type="number"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityNumbOfFloor"
+                          name="houseNumbOfFloor"
                           component="div"
                           className="text-danger"
                         />
@@ -458,12 +549,12 @@ function FacilitiesAddForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityFreeAminities"
+                          name="roomFreeAminities"
                           type="text"
                           style={{ borderRadius: "5px" }}
                         />
                         <ErrorMessage
-                          name="facilityFreeAminities"
+                          name="roomFreeAminities"
                           component="div"
                           className="text-danger"
                         />

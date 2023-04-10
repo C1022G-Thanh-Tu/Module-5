@@ -4,34 +4,37 @@
       "id": 2,
       "name": "Tu Ny",
       "dateOfBirth": "2023-04-07",
-      "gender": 0,
+      "gender": "1",
       "identityNumb": "009561231",
       "phoneNumb": "0901231123",
       "email": "123@gmail.com",
-      "typeId": 2,
-      "address": "abc"
+      "typeId": "2",
+      "address": "abc",
+      "customer": "customer"
     },
     {
       "id": 3,
       "name": "Tu",
       "dateOfBirth": "2023-04-07",
-      "gender": 0,
+      "gender": "1",
       "identityNumb": "009561234",
       "phoneNumb": "0901232334",
       "email": "123@gmail.com",
-      "typeId": 3,
-      "address": "abc"
+      "typeId": "3",
+      "address": "abc",
+      "customer": "customer"
     },
     {
       "name": "Tu Nt",
       "dateOfBirth": "2023-04-06",
-      "gender": 0,
+      "gender": "0",
       "identityNumb": "687654123",
       "phoneNumb": "0901232334",
       "email": "ottovinh080198@gmail.com",
-      "typeId": 1,
+      "typeId": "1",
       "address": "Bình Dương ",
-      "id": 4
+      "id": 4,
+      "customer": "customer"
     }
   ],
   "customerTypes": [
@@ -57,16 +60,20 @@
       "facilityRentalCost": "20000",
       "facitilyMaxPeople": "5",
       "facilityRentalType": "Ngày",
-      "facilityTypeId": 1,
-      "facilityStandard": "vip",
-      "facilityOtherAminities": "Thuê xe máy / xe đạp",
-      "facilityPoolArea": "12",
-      "facilityNumbOfFloor": "3",
-      "facilityFreeAminities": null,
+      "facilityTypeId": "1",
+      "villaStandard": "vip",
+      "villaOtherAminities": "Thuê xe máy / xe đạp",
+      "villaPoolArea": "12",
+      "villaNumbOfFloor": "3",
+      "houseStandard": "",
+      "houseOtherAminities": "",
+      "houseNumbOfFloor": "",
+      "roomFreeAminities": "",
       "facilityAminitiesid": [
-        1,
-        2
-      ]
+        "1",
+        "2"
+      ],
+      "facility": "facility"
     },
     {
       "id": 2,
@@ -76,16 +83,20 @@
       "facilityRentalCost": "20000",
       "facitilyMaxPeople": "5",
       "facilityRentalType": "Ngày",
-      "facilityTypeId": 2,
-      "facilityStandard": "vip",
-      "facilityOtherAminities": "Thuê xe máy / xe đạp",
-      "facilityPoolArea": null,
-      "facilityNumbOfFloor": "3",
-      "facilityFreeAminities": null,
+      "facilityTypeId": "2",
+      "villaStandard": "",
+      "villaOtherAminities": "",
+      "villaPoolArea": "",
+      "villaNumbOfFloor": "",
+      "houseStandard": "vip",
+      "houseOtherAminities": "Thuê xe máy / xe đạp",
+      "houseNumbOfFloor": "3",
+      "roomFreeAminities": "",
       "facilityAminities": [
-        2,
-        3
-      ]
+        "2",
+        "3"
+      ],
+      "facility": "facility"
     },
     {
       "id": 3,
@@ -95,16 +106,20 @@
       "facilityRentalCost": "20000",
       "facitilyMaxPeople": "5",
       "facilityRentalType": "Ngày",
-      "facilityTypeId": 3,
-      "facilityStandard": null,
-      "facilityOtherAminities": null,
-      "facilityPoolArea": null,
-      "facilityNumbOfFloor": null,
-      "facilityFreeAminities": "buffet sáng",
+      "facilityTypeId": "3",
+      "villaStandard": "",
+      "villaOtherAminities": "",
+      "villaPoolArea": "",
+      "villaNumbOfFloor": "",
+      "houseStandard": "",
+      "houseOtherAminities": "",
+      "houseNumbOfFloor": "",
+      "villaFreeAminities": "buffet sáng",
       "facilityAminities": [
-        1,
-        3
-      ]
+        "1",
+        "3"
+      ],
+      "facility": "facility"
     }
   ],
   "aminities": [
@@ -155,9 +170,19 @@
   ],
   "contracts": [
     {
+      "id": 1,
+      "customerId": "3",
+      "facilitiyId": "1",
+      "contractCode": "HD-1",
+      "startDate": "2021-12-08",
+      "endDate": "2021-13-08",
+      "deposit": "1500000",
+      "totalMoney": "30000000"
+    },
+    {
       "id": 2,
-      "customerId": 2,
-      "facilitiyId": 3,
+      "customerId": "2",
+      "facilitiyId": "3",
       "contractCode": "HD-2",
       "startDate": "2021-12-08",
       "endDate": "2021-13-08",

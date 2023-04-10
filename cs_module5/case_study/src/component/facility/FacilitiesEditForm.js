@@ -3,11 +3,136 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Oval } from "react-loader-spinner";
-import { Link } from "react-router-dom";
-import aminities from "../facility/Aminities";
-import facilityType from "./FacilityType";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import aminityService from "../../service/facility/aminityService";
+import facilityTypeService from "../../service/facility/facilityTypeService";
+import { useEffect, useState } from "react";
+import facilityService from "../../service/facility/facilityService";
 
 function FacilitiesEditForm() {
+  let navigate = useNavigate();
+  const param = useParams();
+  const [facility, setFacility] = useState();
+  const [aminities, setAminities] = useState([]);
+  const [facilityType, setFacilityType] = useState([]);
+  const [validation, setValidation] = useState(
+    Yup.object({
+      facilityImg: Yup.string(),
+      facilityName: Yup.string(),
+      facilityArea: Yup.string(),
+      facilityRentalCost: Yup.string(),
+      facitilyMaxPeople: Yup.string(),
+      villaStandard: Yup.string(),
+      villaOtherAminities: Yup.string(),
+      villaPoolArea: Yup.string(),
+      villaNumbOfFloor: Yup.string(),
+      houseStandard: Yup.string(),
+      houseOtherAminities: Yup.string(),
+      houseNumbOfFloor: Yup.string(),
+      roomFreeAminities: Yup.string(),
+    })
+  );
+
+  const defaultValidationSchem = Yup.object({
+    facilityImg: Yup.string(),
+    facilityName: Yup.string(),
+    facilityArea: Yup.string(),
+    facilityRentalCost: Yup.string(),
+    facitilyMaxPeople: Yup.string(),
+    villaStandard: Yup.string(),
+    villaOtherAminities: Yup.string(),
+    villaPoolArea: Yup.string(),
+    villaNumbOfFloor: Yup.string(),
+    houseStandard: Yup.string(),
+    houseOtherAminities: Yup.string(),
+    houseNumbOfFloor: Yup.string(),
+    roomFreeAminities: Yup.string(),
+  })
+
+  const villaValidationSchema = Yup.object({
+    facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityName: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
+    facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
+    facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
+    villaStandard: Yup.string().required("Trường này bắt buộc nhập"),
+    villaOtherAminities: Yup.string().required("Trường này bắt buộc nhập"),
+    villaPoolArea: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^[1-9][\\d]*$", "Diện tích hồ bơi phải là số nguyên dương"),
+    villaNumbOfFloor: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
+  });
+
+  const houseValidationSchema = Yup.object({
+    facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityName: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
+    facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
+    facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
+    houseStandard: Yup.string().required("Trường này bắt buộc nhập"),
+    houseOtherAminities: Yup.string().required("Trường này bắt buộc nhập"),
+    houseNumbOfFloor: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
+  });
+
+  const roomValidationSchema = Yup.object({
+    facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityName: Yup.string()
+      .required("Trường này bắt buộc nhập")
+      .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
+    facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
+    facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
+    facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
+    roomFreeAminities: Yup.string().required("Trường này bắt buộc nhập"),
+  });
+
+  useEffect(() => {
+    const getFacilityDetail = async () => {
+      const facilityDetail = await facilityService.findById(param.id);
+      setFacility(facilityDetail.data);
+    };
+    getFacilityDetail();
+  }, [param.id]);
+
+  useEffect(() => {
+    getAminities();
+    getFacilityTypes();
+  }, []);
+
+  const getAminities = async () => {
+    const aminityData = await aminityService.findAll();
+    setAminities(aminityData.data);
+  };
+
+  const getFacilityTypes = async () => {
+    const facilityTypeData = await facilityTypeService.findAll();
+    setFacilityType(facilityTypeData.data);
+  };
+
+  if (!facility) {
+    return (
+      <Oval
+        height={80}
+        width={80}
+        color="#4fa94d"
+        wrapperStyle={{}}
+        wrapperClassName=""
+        visible={true}
+        ariaLabel="oval-loading"
+        secondaryColor="#4fa94d"
+        strokeWidth={2}
+        strokeWidthSecondary={2}
+      />
+    );
+  }
+
   const handleFacilityChanged = (event) => {
     const villa = document.getElementById("villa");
     const room = document.getElementById("room");
@@ -15,21 +140,25 @@ function FacilitiesEditForm() {
 
     switch (event.currentTarget.value) {
       case "0":
+        setValidation(defaultValidationSchem)
         villa.style.display = "none";
         house.style.display = "none";
         room.style.display = "none";
         break;
       case "1":
+        setValidation(villaValidationSchema);
         villa.style.display = "block";
         house.style.display = "none";
         room.style.display = "none";
         break;
       case "2":
+        setValidation(houseValidationSchema);
         villa.style.display = "none";
         house.style.display = "block";
         room.style.display = "none";
         break;
       case "3":
+        setValidation(roomValidationSchema);
         villa.style.display = "none";
         house.style.display = "none";
         room.style.display = "block";
@@ -38,54 +167,43 @@ function FacilitiesEditForm() {
         throw new Error("Value dịch vụ không hợp lệ");
     }
   };
+
   return (
     <>
-    <h1>abc</h1>
+      <h1>abc</h1>
       <Formik
         initialValues={{
-          facilityImg: "",
-          facilityName: "",
-          facilityArea: "",
-          facilityRentalCost: "",
-          facitilyMaxPeople: "",
-          facilityRentalType: "",
-          facilityTypeId: "",
-          facilityStandard: "",
-          facilityOtherAminities: "",
-          facilityPoolArea: "",
-          facilityNumbOfFloor: "",
-          facilityFreeAminities: "",
-          facilityAminitiesid: [],
+          id: facility?.id,
+          facilityImg: facility?.facilityImg,
+          facilityName: facility?.facilityName,
+          facilityArea: facility?.facilityArea,
+          facilityRentalCost: facility?.facilityRentalCost,
+          facitilyMaxPeople: facility?.facitilyMaxPeople,
+          facilityRentalType: facility?.facilityRentalType,
+          facilityTypeId: facility?.facilityTypeId,
+          villaStandard: facility?.facilityStandard,
+          villaOtherAminities: facility?.facilityOtherAminities,
+          villaPoolArea: facility?.facilityPoolArea,
+          villaNumbOfFloor: facility?.facilityNumbOfFloor,
+          houseStandard: facility?.houseStandard,
+          houseOtherAminities: facility?.houseOtherAminities,
+          houseNumbOfFloor: facility?.houseNumbOfFloor,
+          roomFreeAminities: facility?.roomFreeAminities,
+          facilityAminities: facility?.facilityAminities,
+          facility: facility?.facility,
         }}
-        validationSchema={Yup.object({
-          facilityImg: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityName: Yup.string()
-            .required("Trường này bắt buộc nhập")
-            .matches("^([^0-9]*)$", "Tên dịch vụ không được chứa số"),
-          facilityArea: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityRentalCost: Yup.string().required("Trường này bắt buộc nhập"),
-          facitilyMaxPeople: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityStandard: Yup.string().required("Trường này bắt buộc nhập"),
-          facilityOtherAminities: Yup.string().required(
-            "Trường này bắt buộc nhập"
-          ),
-          facilityPoolArea: Yup.string()
-            .required("Trường này bắt buộc nhập")
-            .matches(
-              "^[1-9][\\d]*$",
-              "Diện tích hồ bơi phải là số nguyên dương"
-            ),
-          facilityNumbOfFloor: Yup.string()
-            .required("Trường này bắt buộc nhập")
-            .matches("^[1-9][\\d]*$", "Số tầng phải là số nguyên dương"),
-          facilityFreeAminities: Yup.string().required(
-            "Trường này bắt buộc nhập"
-          ),
-        })}
+
+        validationSchema={validation}
+
         onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
+          try {
+            facilityService.edit(values)
+            toast("Thêm mới thành công");
+            navigate("/facility");
+          } catch (error) {
+            toast("Thêm mới thất bại");
+          }
           setSubmitting(false);
-          toast('Thêm mới dịch vụ thành công')
         }}
       >
         {({ isSubmitting, setFieldValue }) => (
@@ -136,7 +254,7 @@ function FacilitiesEditForm() {
                     </div>
                     <div className="col-6 px-0">
                       <Field
-                        type="file"
+                        type="text"
                         style={{ borderRadius: 5 }}
                         name="facilityImg"
                       />
@@ -246,8 +364,11 @@ function FacilitiesEditForm() {
                               style={{ width: "5%", marginBottom: "0" }}
                               type="checkbox"
                               id={aminity.id}
-                              name="facilityAminitiesid"
+                              name="facilityAminities"
                               value={aminity.id.toString()}
+                              checked={facility?.facilityAminities.includes(
+                                aminity.id.toString()
+                              )}
                             />
                             <label htmlFor={aminity.id} className="col-10">
                               {aminity.name}
@@ -271,9 +392,9 @@ function FacilitiesEditForm() {
                         onChange={(event) => {
                           handleFacilityChanged(event);
                           setFieldValue(
-                            'facilityTypeId',
+                            "facilityTypeId",
                             event.currentTarget.value
-                          )
+                          );
                         }}
                       >
                         <option value="0">Dịch vụ</option>
@@ -285,6 +406,7 @@ function FacilitiesEditForm() {
                       </Field>
                     </div>
                   </div>
+                  {/* { type == "0"} */}
                   <div id="villa" style={{ display: "none" }}>
                     <div className="d-flex mb-3 row">
                       <div className="col-6 pe-0 d-flex align-items-center">
@@ -299,10 +421,10 @@ function FacilitiesEditForm() {
                         <Field
                           type="text"
                           style={{ borderRadius: 5 }}
-                          name="facilityStandard"
+                          name="villaStandard"
                         />
                         <ErrorMessage
-                          name="facilityStandard"
+                          name="villaStandard"
                           component="div"
                           className="text-danger"
                         />
@@ -319,12 +441,12 @@ function FacilitiesEditForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityOtherAminities"
+                          name="villaOtherAminities"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityOtherAminities"
+                          name="villaOtherAminities"
                           component="div"
                           className="text-danger"
                         />
@@ -341,12 +463,12 @@ function FacilitiesEditForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityPoolArea"
+                          name="villaPoolArea"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityPoolArea"
+                          name="villaPoolArea"
                           component="div"
                           className="text-danger"
                         />
@@ -363,12 +485,12 @@ function FacilitiesEditForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityNumbOfFloor"
+                          name="villaNumbOfFloor"
                           type="number"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityNumbOfFloor"
+                          name="villaNumbOfFloor"
                           component="div"
                           className="text-danger"
                         />
@@ -387,12 +509,12 @@ function FacilitiesEditForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityStandard"
+                          name="houseStandard"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityStandard"
+                          name="houseStandard"
                           component="div"
                           className="text-danger"
                         />
@@ -409,12 +531,12 @@ function FacilitiesEditForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityOtherAminities"
+                          name="houseOtherAminities"
                           type="text"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityOtherAminities"
+                          name="houseOtherAminities"
                           component="div"
                           className="text-danger"
                         />
@@ -431,12 +553,12 @@ function FacilitiesEditForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityNumbOfFloor"
+                          name="houseNumbOfFloor"
                           type="number"
                           style={{ borderRadius: 5 }}
                         />
                         <ErrorMessage
-                          name="facilityNumbOfFloor"
+                          name="houseNumbOfFloor"
                           component="div"
                           className="text-danger"
                         />
@@ -455,12 +577,12 @@ function FacilitiesEditForm() {
                       </div>
                       <div className="col-6 px-0">
                         <Field
-                          name="facilityFreeAminities"
+                          name="roomFreeAminities"
                           type="text"
                           style={{ borderRadius: "5px" }}
                         />
                         <ErrorMessage
-                          name="facilityFreeAminities"
+                          name="roomFreeAminities"
                           component="div"
                           className="text-danger"
                         />

@@ -54,12 +54,13 @@ function CustomerEditForm() {
           id: customer?.id,
           name: customer?.name,
           dateOfBirth: customer?.dateOfBirth,
-          gender: customer?.gender.toString(),
+          gender: customer?.gender,
           identityNumb: customer?.identityNumb,
           phoneNumb: customer?.phoneNumb,
           email: customer?.email,
           typeId: customer?.typeId,
           address: customer?.address,
+          customer: customer?.customer
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -86,10 +87,10 @@ function CustomerEditForm() {
         })}
         onSubmit={(values, { setSubmitting }) => {
           try {
-            if (typeof values.gender === "string" && typeof values.typeId === "string") {
-              values.gender = parseInt(values.gender);
-              values.typeId = parseInt(values.typeId);
-            }
+            // if (typeof values.gender === "string" && typeof values.typeId === "string") {
+            //   values.gender = parseInt(values.gender);
+            //   values.typeId = parseInt(values.typeId);
+            // }
             customerService.edit(values);
             setSubmitting(false);
             toast("Sửa thông tin khách hàng thành công");

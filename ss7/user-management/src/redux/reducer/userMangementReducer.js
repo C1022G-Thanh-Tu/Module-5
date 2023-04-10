@@ -7,7 +7,8 @@ export const manageUserReducer = (state = initialState, action) => {
     case USER_LIST_ACTION:
       return action.payload
     case USER_DELETE_ACTION:
-      return [...state]
+      const deletedSate = state.filter((element) => element.id !== action.payload)
+      return deletedSate
     default:
       return state;
   }
