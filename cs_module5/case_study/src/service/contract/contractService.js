@@ -4,8 +4,9 @@ const findAll = () => {
   return request.get("/contracts");
 };
 
-const findByContractCode = (search) => {
-  return request.get(`/contracts?contractCode_like=${search}`);
+const findByContractCode = async (search) => {
+  const rs = await request.get(`/contracts?contractCode_like=${search}`);
+  return rs
 };
 
 const save = (contract) => {

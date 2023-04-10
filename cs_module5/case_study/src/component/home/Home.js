@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import Footer from "../Footer";
+import React, { useEffect, useState } from "react";
 import Header from "../Header";
+import facilityService from "../../service/facility/facilityService";
 
 {
   /* Automatic Slideshow - change image every 4 seconds */
@@ -22,6 +22,15 @@ function carousel() {
 }
 
 function Home() {
+  const [facilitiesList, setFacilitiesList] = useState([]);
+  useEffect(() => {
+    getAllFacilities();
+  }, []);
+
+  const getAllFacilities = async () => {
+    const facilityData = await facilityService.findAll();
+    setFacilitiesList(facilityData.data);
+  };
   useEffect(() => {
     carousel();
 
@@ -108,7 +117,7 @@ function Home() {
             </a>
           </div>
           <div className="col-4">
-            <p style={{ textAlign: "justify", fontSize: 12 }}>
+            <p style={{ textAlign: "justify" }}>
               Hướng ra bãi biển Đà Nẵng trải dài cát trắng, Furama Resort Đà
               Nẵng là cửa ngõ đến với 3 di sản văn hoá thế giới: Hội An (20
               phút), Mỹ Sơn (90 phút) và Huế (2 tiếng. 196 phòng hạng sang cùng
@@ -121,7 +130,7 @@ function Home() {
             </p>
           </div>
         </div>
-        <div className="row mt-3">
+        <div className="row mt-5">
           <div className="text-center">
             <h2
               style={{
@@ -135,7 +144,7 @@ function Home() {
             >
               CÁC LOẠI PHÒNG
             </h2>
-            <p style={{ fontSize: 12 }} className="">
+            <p style={{ padding: "0 150px" }} className="mb-5">
               Khu nghỉ dưỡng có 196 phòng được thiết kế theo phong cách truyền
               thống Việt Nam kết hợp với phong cách Pháp, 2 tòa nhà 4 tầng có
               hướng nhìn ra biển, nhìn ra hồ bơi trong xanh và những khu vườn
@@ -144,6 +153,172 @@ function Home() {
               dịch vụ mát-xa cạnh hồ bơi, các dịch vụ thể thao dưới nước và các
               lớp tập yoga và Thái Cực Quyền trên bãi biển.
             </p>
+            <div className="row">
+              {facilitiesList.map((facility, index) => (
+                <div
+                  className="col-4 mb-3"
+                  key={index}
+                  style={{ padding: "0" }}
+                >
+                  <div className="card">
+                    <img
+                      src={facility.facilityImg}
+                      className="card-img-top"
+                      alt="..."
+                      width={370}
+                      height={239}
+                    />
+                    <div className="card-body">
+                      <h5 className="card-title">{facility.facilityName}</h5>
+                      <p className="card-text">{facility.facilityArea}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="row mt-5">
+          <div className="text-center">
+            <h2
+              style={{
+                fontSize: 24,
+                color: "#cbbe73",
+                textAlign: "center",
+                fontFamily: "Playfair Display",
+                fontWeight: 700,
+                fontStyle: "normal",
+              }}
+            >
+              TRẢI NGHIỆM ẨM THỰC & GIẢI TRÍ
+            </h2>
+            <p style={{ padding: "0 250px" }} className="mb-5">
+              Khu nghỉ dưỡng Furama Đà Nẵng là một khu nghỉ dưỡng 5 sao sang
+              trọng, có uy tín và được xem là một trong những biểu tượng của
+              ngành du lịch Việt Nam.
+            </p>
+          </div>
+          <div className="row mb-5">
+            <div
+              className="col-6 flex-column justify-content-center"
+              style={{ display: "flex" }}
+            >
+              <h2
+                style={{
+                  fontSize: 30,
+                  color: "#cbbe73",
+                  fontFamily: "Playfair Display",
+                  fontWeight: 700,
+                  fontStyle: "normal",
+                }}
+              >
+                ẨM THỰC
+              </h2>
+              <p className="mb-5">
+                Trải nghiệm ẩm thực tại Khu nghỉ có sự pha trộn độc đáo các món
+                ăn truyền thống Việt Nam với nhiều những hương vị ẩm thực châu
+                Á, Ý và châu Âu cùng các món bò nhập khẩu thượng hạng tại đa
+                dạng các nhà hàng, quầy bar đẳng cấp được bao quanh bởi một khu
+                vườn nhiệt đới hay hướng mình ra biển, đón…
+              </p>
+              <button
+                type="button"
+                style={{
+                  width: "120px",
+                  backgroundColor: "#046056",
+                  fontSize: "13px",
+                }}
+              >
+                XEM THÊM
+              </button>
+            </div>
+            <div className="col-6">
+              <img
+                src="https://furamavietnam.com/wp-content/uploads/2018/07/CULIRARY.jpg"
+                width="100%"
+              />
+            </div>
+          </div>
+          <div className="row mb-5">
+            <div className="col-6">
+              <img
+                src="https://furamavietnam.com/wp-content/uploads/2018/07/RECREATION.jpg"
+                width="100%"
+              />
+            </div>
+            <div
+              className="col-6 flex-column justify-content-center"
+              style={{ display: "flex" }}
+            >
+              <h2
+                style={{
+                  fontSize: 30,
+                  color: "#cbbe73",
+                  fontFamily: "Playfair Display",
+                  fontWeight: 700,
+                  fontStyle: "normal",
+                }}
+              >
+                GIẢI TRÍ
+              </h2>
+              <p className="mb-5">
+                Biến kỳ nghỉ dưỡng năng động hơn bằng cách tham gia các hoạt
+                động thể thao trên nước từ chèo thuyền catamaran, lướt ván buồm,
+                chèo thuyền trên biển, lướt vát, đi xe đạp nước, trượt nước,
+                lướt ván, chuối, dù lượn và đa dạng các hoạt động.
+              </p>
+              <button
+                type="button"
+                style={{
+                  width: "120px",
+                  backgroundColor: "#046056",
+                  fontSize: "13px",
+                }}
+              >
+                XEM THÊM
+              </button>
+            </div>
+          </div>
+          <div className="row mb-5">
+            <div
+              className="col-6 flex-column justify-content-center"
+              style={{ display: "flex" }}
+            >
+              <h2
+                style={{
+                  fontSize: 30,
+                  color: "#cbbe73",
+                  fontFamily: "Playfair Display",
+                  fontWeight: 700,
+                  fontStyle: "normal",
+                }}
+              >
+                SỰ KIỆN
+              </h2>
+              <p className="mb-5">
+                Cung hội nghị Quốc tế International Convention Palace (ICP) với
+                phòng Hội nghị lớn sức chứa lên tới 1000 khách cùng hơn 10 phòng
+                chức năng phụ trợ quy mô từ 50 đến 300 khách được trang bị cơ sở
+                vật chất, thiết bị hiện đại, là địa điểm lý tưởng dành cho các
+                đoàn MICE tổ chức hội nghị, hội thảo và sự kiện.
+              </p>
+              <button
+                type="button"
+                style={{
+                  width: "120px",
+                  backgroundColor: "#046056",
+                  fontSize: "13px",
+                }}
+              >
+                XEM THÊM
+              </button>
+            </div>
+            <div className="col-6">
+              <img
+                src="https://furamavietnam.com/wp-content/uploads/2018/10/02.-ICP-ICP_Furama_Danang_-Ball-Room-4.jpg"
+                width="100%"
+              />
+            </div>
           </div>
         </div>
       </div>

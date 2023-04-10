@@ -43,6 +43,10 @@
   box-sizing: border-box;
 }
 
+body {
+  background: url('https://furamavietnam.com/wp-content/uploads/2018/08/BG2.jpg') center / cover no-repeat;
+}
+
 #header {
   height: 70px;
   background-color: #046056;

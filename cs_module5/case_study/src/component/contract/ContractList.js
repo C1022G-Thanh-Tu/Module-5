@@ -53,8 +53,10 @@ function ContractList() {
   }, []);
 
   const getContractList = async () => {
-    const contractData = await contractService.contractCode({ search: "" });
+    const contractData = await contractService.findByContractCode({search: ""});
+    // const contractData = await contractService.findAll()
     setContractList(contractData.data);
+    console.log(contractData.data);
   };
 
   const getCustomerList = async () => {
