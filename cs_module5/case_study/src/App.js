@@ -13,11 +13,13 @@ import FacilitiesAddForm from "./component/facility/FacilitiesAddForm";
 import CustomerEditForm from "./component/customer/CustomerEditForm";
 import CustomerAddForm from "./component/customer/CustomerAddForm";
 import ContractAddForm from "./component/contract/ContractAddForm";
+import ScrollToTop from "./component/ScrollToTop";
 
 function App() {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/facility" element={<FacilitiesList />} />

@@ -5,7 +5,6 @@ import facilityTypeService from '../../service/facility/facilityTypeService'
 import ModalDelete from "../modal/modalDelete";
 import ReactPaginate from "react-paginate";
 import { Formik, Form, Field } from "formik";
-import { Oval } from "react-loader-spinner";
 
 function FacilitiesList() {
   const [facilitiesList, setFacilitiesList] = useState([]);
