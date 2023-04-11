@@ -44,7 +44,7 @@
 }
 
 body {
-  background: url('https://furamavietnam.com/wp-content/uploads/2018/08/BG2.jpg') center / cover no-repeat;
+  background: url('https://furamavietnam.com/wp-content/uploads/2018/08/BG2.jpg') center / contain no-repeat;
 }
 
 #header {
@@ -236,9 +236,9 @@ button:hover {
   display: flex;
   justify-self: center;
   align-items: center;
-  margin-bottom: 5rem;
   font-size: 1.2rem;
   gap: 5px;
+  margin-top: 20px;
 }
 .pagination .page-num,
 .pagination .page-previous,

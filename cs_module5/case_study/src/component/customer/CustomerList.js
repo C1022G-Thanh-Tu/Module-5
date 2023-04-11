@@ -78,7 +78,7 @@ function CustomerList() {
 
         <div className="room container">
           <div
-            classname="text-center"
+            className="text-center"
             style={{
               fontSize: 30,
               color: "#cbbe73",
@@ -129,7 +129,7 @@ function CustomerList() {
                     type="search"
                     name="search"
                     id="search"
-                    placeholder="tìm kiếm"
+                    placeholder="Tìm kiếm"
                   />
                   <span className="input-group-append">
                     <button
@@ -202,7 +202,7 @@ function CustomerList() {
                         className="btn btn-primary btn-sm edit"
                         to={`/customer-edit/${customer.id}`}
                       >
-                        <i className="fas fa-edit"></i>
+                        <i className="fas fa-edit" style={{padding: '7px 3px'}}></i>
                       </Link>
                     </td>
                   </tr>

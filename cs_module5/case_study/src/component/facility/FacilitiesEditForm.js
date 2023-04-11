@@ -120,7 +120,7 @@ function FacilitiesEditForm() {
   useEffect(() => {
     const getFacilityDetail = async () => {
       const facilityDetail = await facilityService.findById(param.id);
-      setType(facilityDetail.data.facilityTypeId)
+      setType(facilityDetail.data.facilityTypeId);
       setFacility(facilityDetail.data);
     };
     getFacilityDetail();
@@ -205,49 +205,45 @@ function FacilitiesEditForm() {
           facitilyMaxPeople: facility?.facitilyMaxPeople,
           facilityRentalType: facility?.facilityRentalType,
           facilityTypeId: facility?.facilityTypeId,
-          villaStandard: facility?.facilityStandard,
-          villaOtherAminities: facility?.facilityOtherAminities,
-          villaPoolArea: facility?.facilityPoolArea,
-          villaNumbOfFloor: facility?.facilityNumbOfFloor,
+          villaStandard: facility?.villaStandard,
+          villaOtherAminities: facility?.villaOtherAminities,
+          villaPoolArea: facility?.villaPoolArea,
+          villaNumbOfFloor: facility?.villaNumbOfFloor,
           houseStandard: facility?.houseStandard,
           houseOtherAminities: facility?.houseOtherAminities,
           houseNumbOfFloor: facility?.houseNumbOfFloor,
           roomFreeAminities: facility?.roomFreeAminities,
-          facilityAminities: facility?.facilityAminities,
+          facilityAminitiesid: facility?.facilityAminitiesid,
           facility: facility?.facility,
         }}
-        
         validationSchema={validation}
-
         onSubmit={(values, { setSubmitting }) => {
           try {
             switch (values.facilityTypeId) {
               case "1":
-                values.houseStandard = ""
-                values.houseNumbOfFloor = ""
-                values.houseOtherAminities = ""
-                values.roomFreeAminities = ""
+                values.houseStandard = "";
+                values.houseNumbOfFloor = "";
+                values.houseOtherAminities = "";
+                values.roomFreeAminities = "";
                 break;
               case "2":
-                values.villaStandard = ""
-                values.villaNumbOfFloor = ""
-                values.villaOtherAminities = ""
-                values.villaPoolArea = ""
-                values.roomFreeAminities = ""
+                values.villaStandard = "";
+                values.villaNumbOfFloor = "";
+                values.villaOtherAminities = "";
+                values.villaPoolArea = "";
+                values.roomFreeAminities = "";
                 break;
               case "3":
-                values.houseStandard = ""
-                values.houseNumbOfFloor = ""
-                values.houseOtherAminities = ""
-                values.villaStandard = ""
-                values.villaNumbOfFloor = ""
-                values.villaOtherAminities = ""
-                values.villaPoolArea = ""
+                values.houseStandard = "";
+                values.houseNumbOfFloor = "";
+                values.houseOtherAminities = "";
+                values.villaStandard = "";
+                values.villaNumbOfFloor = "";
+                values.villaOtherAminities = "";
+                values.villaPoolArea = "";
               default:
                 break;
             }
-            console.log('facility',facility);
-            console.log('values', values);
             facilityService.edit(values);
             toast("Sửa thành công");
             navigate("/facility");
@@ -257,7 +253,7 @@ function FacilitiesEditForm() {
           setSubmitting(false);
         }}
       >
-        {({ isSubmitting, setFieldValue }) => (
+        {({ isSubmitting, setFieldValue, getFieldProps }) => (
           <Form>
             <div className="d-flex justify-content-center">
               <div
@@ -415,11 +411,8 @@ function FacilitiesEditForm() {
                               style={{ width: "5%", marginBottom: "0" }}
                               type="checkbox"
                               id={aminity.id}
-                              name="facilityAminities"
+                              name="facilityAminitiesid"
                               value={aminity.id.toString()}
-                              checked={facility?.facilityAminities.includes(
-                                aminity.id.toString()
-                              )}
                             />
                             <label htmlFor={aminity.id} className="col-10">
                               {aminity.name}

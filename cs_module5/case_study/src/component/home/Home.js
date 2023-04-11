@@ -28,7 +28,7 @@ function Home() {
   }, []);
 
   const getAllFacilities = async () => {
-    const facilityData = await facilityService.findAll();
+    const facilityData = await facilityService.findLimit3();
     setFacilitiesList(facilityData.data);
   };
   useEffect(() => {

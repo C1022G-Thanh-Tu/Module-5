@@ -24,13 +24,18 @@ const findById = (id) => {
   return request.get(`/facilities/${id}`);
 };
 
+const findLimit3 = () => {
+  return request.get("/facilities?_limit=3");
+};
+
 const facilityService = {
   findAll,
   save,
   remove,
   edit,
   findById,
-  findByName
+  findByName,
+  findLimit3
 };
 
 export default facilityService;

@@ -76,7 +76,7 @@ function CustomerAddForm() {
       >
         {({ isSubmitting }) => (
           <Form>
-            <div className="testbox" style={{ marginTop: "70px" }}>
+            <div className="testbox" style={{ marginTop: "70px"}}>
               <div className="">
                 <h1>Thêm mới Khách hàng</h1>
                 <div className="item">

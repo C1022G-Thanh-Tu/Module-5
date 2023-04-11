@@ -69,7 +69,7 @@ function FacilitiesList() {
 
         <div className="room container">
           <div
-            classname="text-center"
+            className="text-center"
             style={{
               fontSize: 30,
               color: "#cbbe73",
@@ -120,7 +120,7 @@ function FacilitiesList() {
                     type="search"
                     name="search"
                     id="search"
-                    placeholder="tìm kiếm"
+                    placeholder="Tìm kiếm"
                   />
                   <span className="input-group-append">
                     <button
@@ -137,7 +137,11 @@ function FacilitiesList() {
           </Formik>
           <div className="row">
             {currentItems.map((facility, index) => (
-              <div className="col-4 mb-3" key={index}>
+              <div
+                className="col-4 mb-3"
+                key={index}
+                style={{ padding: "0 8px" }}
+              >
                 <div
                   className="card"
                   style={{ boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)" }}
@@ -150,10 +154,12 @@ function FacilitiesList() {
                     height={239}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{facility.facilityName}</h5>
-                    <p className="card-text">{facility.facilityArea}</p>
+                    <h5 className="card-title" style={{ fontSize: "18px" }}>
+                      {facility.facilityName}
+                    </h5>
+                    <p className="card-text mb-3">{facility.facilityArea}</p>
                     <button
-                      style={{ marginRight: "5px" }}
+                      style={{ marginRight: "5px", width: 40, height: 40 }}
                       type="button"
                       className="btn btn-danger"
                       data-bs-toggle="modal"
@@ -172,7 +178,10 @@ function FacilitiesList() {
                       className="btn btn-primary btn-sm edit"
                       to={`/facility-edit/${facility.id}`}
                     >
-                      <i className="fas fa-edit"></i>
+                      <i
+                        className="fas fa-edit"
+                        style={{ padding: "8px 3px", fontSize: "15px" }}
+                      ></i>
                     </Link>
                   </div>
                 </div>

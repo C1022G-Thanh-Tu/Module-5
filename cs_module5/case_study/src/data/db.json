@@ -136,7 +136,7 @@
       "houseOtherAminities": "Thuê xe máy / xe đạp",
       "houseNumbOfFloor": "3",
       "roomFreeAminities": "",
-      "facilityAminities": [
+      "facilityAminitiesid": [
         "2",
         "3"
       ],
@@ -159,7 +159,7 @@
       "houseOtherAminities": "",
       "houseNumbOfFloor": "",
       "roomFreeAminities": "Bufect Sáng",
-      "facilityAminities": [
+      "facilityAminitiesid": [
         "1",
         "3"
       ],

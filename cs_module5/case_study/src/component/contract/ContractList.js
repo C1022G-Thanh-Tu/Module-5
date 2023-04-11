@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Formik, Form, Field } from "formik";
+import { Oval } from "react-loader-spinner";
 
 function ContractList() {
   const [contractList, setContractList] = useState([]);
@@ -16,12 +17,40 @@ function ContractList() {
   const itemsPerPage = 3;
   let stt = itemOffset;
 
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % contractList.length;
+    setItemOffset(newOffset);
+  };
+
+  useEffect(() => {
+    getContractList();
+    getCustomerList();
+    getFacilitiesList();
+  }, []);
+
+  const getContractList = async () => {
+    const contractData = await contractService.findAll();
+    setContractList(contractData.data);
+  };
+
+  const getCustomerList = async () => {
+    const customerData = await customerService.findAll();
+    setCustomerList(customerData.data);
+  };
+
+  const getFacilitiesList = async () => {
+    const facilityData = await facilityService.findAll();
+    setFacilitiesList(facilityData.data);
+  };
+
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
     setCurrentItems(contractList.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(contractList.length / itemsPerPage));
-    let firstPage = document.querySelector(".page-next");
-    let lastPage = document.querySelector(".page-previous");
+    let firstPage = document.querySelector(".page-previous");
+    let lastPage = document.querySelector(".page-next");
+    // console.log("first", firstPage);
+    // console.log("last", lastPage);
     if (firstPage != null && lastPage != null) {
       if (itemOffset == 0) {
         if (endOffset >= contractList.length) {
@@ -39,35 +68,24 @@ function ContractList() {
         lastPage.style.display = "block";
       }
     }
-  }, [itemOffset, itemsPerPage, contractList]);
+  }, [itemOffset, contractList]);
 
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % contractList.length;
-    setItemOffset(newOffset);
-  };
-
-  useEffect(() => {
-    getContractList();
-    getCustomerList();
-    getFacilitiesList();
-  }, []);
-
-  const getContractList = async () => {
-    const contractData = await contractService.findByContractCode({search: ""});
-    // const contractData = await contractService.findAll()
-    setContractList(contractData.data);
-    console.log(contractData.data);
-  };
-
-  const getCustomerList = async () => {
-    const customerData = await customerService.findAll();
-    setCustomerList(customerData.data);
-  };
-
-  const getFacilitiesList = async () => {
-    const facilityData = await facilityService.findAll();
-    setFacilitiesList(facilityData.data);
-  };
+  if (contractList.length === 0) {
+    return (
+      <Oval
+        height={80}
+        width={80}
+        color="#4fa94d"
+        wrapperStyle={{}}
+        wrapperClassName=""
+        visible={true}
+        ariaLabel="oval-loading"
+        secondaryColor="#4fa94d"
+        strokeWidth={2}
+        strokeWidthSecondary={2}
+      />
+    )
+  }
 
   return (
     <>
@@ -108,7 +126,7 @@ function ContractList() {
             }}
             onSubmit={(values) => {
               const getContractsByName = async () => {
-                const contractData = await contractService.findByName(
+                const contractData = await contractService.findByContractCode(
                   values.search
                 );
                 setContractList(contractData.data);
@@ -128,7 +146,7 @@ function ContractList() {
                     type="search"
                     name="search"
                     id="search"
-                    placeholder="tìm kiếm"
+                    placeholder="Tìm kiếm"
                   />
                   <span className="input-group-append">
                     <button
@@ -196,8 +214,8 @@ function ContractList() {
               renderOnZeroPageCount={null}
               containerClassName="pagination"
               pageLinkClassName="page-num"
-              nextLinkClassName="page-previous"
-              previousLinkClassName="page-next"
+              nextLinkClassName="page-next"
+              previousLinkClassName="page-previous"
               activeClassName="active"
             />
           </div>
