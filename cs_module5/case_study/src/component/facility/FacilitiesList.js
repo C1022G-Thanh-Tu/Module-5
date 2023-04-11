@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import facilityService from "../../service/facility/facilityService";
+import facilityTypeService from '../../service/facility/facilityTypeService'
 import ModalDelete from "../modal/modalDelete";
 import ReactPaginate from "react-paginate";
 import { Formik, Form, Field } from "formik";
+import { Oval } from "react-loader-spinner";
 
 function FacilitiesList() {
   const [facilitiesList, setFacilitiesList] = useState([]);
+  const [facilityTypeList, setFacilityTypeList] = useState([])
   const [deletedId, setDeleteId] = useState(0);
   const [deletedName, setDeleteName] = useState("");
   const [deletedType, setDeleteType] = useState("");
@@ -47,12 +50,25 @@ function FacilitiesList() {
 
   useEffect(() => {
     getAllFacilities();
+    getAllFacilityType()
   }, []);
 
   const getAllFacilities = async () => {
     const facilityData = await facilityService.findByName({ search: "" });
     setFacilitiesList(facilityData.data);
   };
+
+  const getAllFacilitiesByType = async () => {
+    const typeSelectData = document.getElementById('type-select').value
+    const facilityTypeData = await facilityService.findByType(typeSelectData)
+    setFacilitiesList(facilityTypeData.data)
+  }
+
+  const getAllFacilityType = async () => {
+    const facilityTypeData = await facilityTypeService.findAll()
+    setFacilityTypeList(facilityTypeData.data)
+  }
+
 
   const transferInfo = (id, name, type) => {
     setDeleteId(id);
@@ -82,59 +98,70 @@ function FacilitiesList() {
           >
             Danh sách dịch vụ
           </div>
-          <div
-            className="element-button mb-5"
-            style={{ display: "inline-block" }}
-          >
-            <Link
-              className="btn btn-add btn-sm bg-success text-white"
-              to="/facility-add"
+          <div style={{ display: "flex" , justifyContent: 'space-between'}}>
+            <div
+              className="element-button mb-5"
+              style={{ display: "inline-block" }}
             >
-              <i className="fas fa-plus"></i>
-              Tạo mới dịch vụ
-            </Link>
-          </div>
-          <Formik
-            initialValues={{
-              search: "",
-            }}
-            onSubmit={(values) => {
-              const getFacilitiesByName = async () => {
-                const facilityData = await facilityService.findByName(
-                  values.search
-                );
-                setFacilitiesList(facilityData.data);
-              };
-              getFacilitiesByName();
-            }}
-          >
-            <Form
-              className="col-4"
-              style={{ float: "right", width: "100%", padding: "0" }}
+              <Link
+                className="btn btn-add btn-sm bg-success text-white"
+                to="/facility-add"
+              >
+                <i className="fas fa-plus"></i>
+                Tạo mới dịch vụ
+              </Link>
+            </div>
+            <div>
+              <select id="type-select" onChange={() => getAllFacilitiesByType()}>
+                <option value=''>---Chọn loại dịch vụ---</option>
+                {facilityTypeList?.map((type) => (
+                  <option key={type.id} value={type.id}>{type.name}</option>
+                ))}
+              </select>
+            </div>
+            <Formik
+              initialValues={{
+                search: "",
+              }}
+              onSubmit={(values) => {
+                const getFacilitiesByName = async () => {
+                  const facilityData = await facilityService.findByName(
+                    values.search
+                  );
+                  setFacilitiesList(facilityData.data);
+                };
+                getFacilitiesByName();
+              }}
             >
-              <div className="search-btn">
-                <div className="input-group">
-                  <Field
-                    style={{ border: "1px solid" }}
-                    className="form-control"
-                    type="search"
-                    name="search"
-                    id="search"
-                    placeholder="Tìm kiếm"
-                  />
-                  <span className="input-group-append">
-                    <button
+              <Form
+                className="col-4"
+                style={{ width: "100%", padding: "0" , boxShadow: 'none'}}
+              >
+                <div className="search-btn">
+                  <div className="input-group">
+                    <Field
                       style={{ border: "1px solid" }}
-                      className="btn bg-white"
-                      type="submit"
-                    >
-                      <i className="fa fa-search"></i>
-                    </button>
-                  </span>
+                      className="form-control"
+                      type="search"
+                      name="search"
+                      id="search"
+                      placeholder="Tìm kiếm"
+                    />
+                    <span className="input-group-append">
+                      <button
+                        style={{ border: "1px solid" }}
+                        className="btn bg-white"
+                        type="submit"
+                      >
+                        <i className="fa fa-search"></i>
+                      </button>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </Form>
-          </Formik>
+              </Form>
+            </Formik>
+          </div>
+
           <div className="row">
             {currentItems.map((facility, index) => (
               <div

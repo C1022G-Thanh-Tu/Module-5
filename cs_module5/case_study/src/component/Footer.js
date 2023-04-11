@@ -70,7 +70,7 @@ function Footer() {
                   <input
                     type="text"
                     className="form-control rounded-left"
-                    placeholder="Enter email address"
+                    placeholder="Nhập địa chỉ email"
                   />
                   <button
                     type="submit"
@@ -83,7 +83,7 @@ function Footer() {
               </form>
             </div>
             <div className="col-md-6 col-lg-3 mb-md-0 mb-4">
-              <h2 className="footer-heading">Latest News</h2>
+              <h2 className="footer-heading">Tin tức mới nhất</h2>
               <div className="block-21 mb-4 d-flex">
                 <a
                   className="img mr-4 rounded"
@@ -146,7 +146,7 @@ function Footer() {
               </div>
             </div>
             <div className="col-md-6 col-lg-3 mb-md-0 mb-4">
-              <h2 className="footer-heading">Best Sellers</h2>
+              <h2 className="footer-heading">Bán chạy nhất</h2>
               <div className="row">
                 <div className="col-md-12">
                   <div className="featured">
@@ -157,7 +157,7 @@ function Footer() {
                     ></a>
                     <div className="text">
                       <h3>
-                        <a href="#">Grilled Beef with potatoes</a>
+                        <a href="#">Bò nướng khoai tây</a>
                       </h3>
                       <p className="rate">
                         <a href="#">
