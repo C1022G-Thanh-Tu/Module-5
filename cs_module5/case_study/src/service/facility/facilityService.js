@@ -13,7 +13,7 @@ const findByName = (search) => {
 };
 
 const findByType = (type) => {
-  return request.get(`/facilities?facilityTypeId=${type}`)
+  return request.get(`/facilities?facilityTypeId_like=${type}`)
 }
 
 const remove = (id) => {
