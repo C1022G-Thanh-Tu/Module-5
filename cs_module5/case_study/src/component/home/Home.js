@@ -49,8 +49,8 @@ function Home() {
         <div className="mySlides">
           <img
             src="img/Vietnam_Danang_Furama_Resort_Exterior_Ocean-Pool-6.jpg"
-            style={{ width: "100%" }}
-            height="10%"
+            width='100%'
+            height="600px"
           />
           <div className="slider-content">
             <h3>KHU NGHỈ DƯỠNG ẨM THỰC</h3>
@@ -61,8 +61,9 @@ function Home() {
         <div className="mySlides">
           <img
             src="img/Vietnam_Danang_Furama_Resort_Exterior-Furama-girl-with-pink-hat.jpg"
-            style={{ width: "100%" }}
-            height="10%"
+            width='100%'
+            height="600px"
+            alt="..."
           />
           <div className="slider-content">
             <h3>KHU NGHỈ DƯỠNG ẨM THỰC</h3>
@@ -73,8 +74,9 @@ function Home() {
         <div className="mySlides">
           <img
             src="img/Vietnam_Danang_Furama_Resort_Exterior_Courtyard.jpg"
-            style={{ width: "100%" }}
-            height="10%"
+            width='100%'
+            height="600px"
+            alt="..."
           />
           <div className="slider-content">
             <h3>KHU NGHỈ DƯỠNG ẨM THỰC</h3>
@@ -112,7 +114,6 @@ function Home() {
                 width={1000}
                 height={754}
                 className="img-fluid"
-                srcSet=""
               />
             </a>
           </div>
