@@ -1,0 +1,33 @@
+{
+  "products": [
+    {
+      "id": 2,
+      "name": "Mobile Phone",
+      "typeId": 1
+    },
+    {
+      "id": 3,
+      "name": "Knife",
+      "typeId": 2
+    },
+    {
+      "id": 4,
+      "name": "Lego Toy",
+      "typeId": 3
+    }
+  ],
+  "productTypes": [
+    {
+      "id": 1,
+      "name": "Electronnic Device"
+    },
+    {
+      "id": 2,
+      "name": "Cutlery"
+    },
+    {
+      "id": 3,
+      "name": "Toys"
+    }
+  ]
+}

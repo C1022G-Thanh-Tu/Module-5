@@ -42,7 +42,7 @@ class AddComponent extends Component {
         </div>
 
         <div>
-          <table class="table">
+          <table className="table">
             <thead>
               <tr>
                 <th scope="col">#</th>

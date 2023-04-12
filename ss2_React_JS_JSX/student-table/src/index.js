@@ -36,7 +36,7 @@ const students = [
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render (
-<table class="table table-striped">
+<table className="table table-striped">
 <thead>
     <tr>
       <th scope="col">Company</th>
