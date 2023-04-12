@@ -13,9 +13,6 @@ function Header() {
           <li>
             <NavLink to="/facility">Dịch vụ</NavLink>
           </li>
-          {/* <li>
-            <a href="">Đội ngũ</a>
-          </li> */}
           <li>
             <NavLink to="/customer">Khách hàng</NavLink>
           </li>

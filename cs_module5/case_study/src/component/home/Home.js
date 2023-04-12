@@ -31,6 +31,7 @@ function Home() {
     const facilityData = await facilityService.findLimit3();
     setFacilitiesList(facilityData.data);
   };
+
   useEffect(() => {
     carousel();
 
@@ -49,8 +50,8 @@ function Home() {
         <div className="mySlides">
           <img
             src="img/Vietnam_Danang_Furama_Resort_Exterior_Ocean-Pool-6.jpg"
-            width='100%'
-            height="600px"
+            width="100%"
+            height="700px"
           />
           <div className="slider-content">
             <h3>KHU NGHỈ DƯỠNG ẨM THỰC</h3>
@@ -61,7 +62,7 @@ function Home() {
         <div className="mySlides">
           <img
             src="img/Vietnam_Danang_Furama_Resort_Exterior-Furama-girl-with-pink-hat.jpg"
-            width='100%'
+            width="100%"
             height="600px"
             alt="..."
           />
@@ -74,7 +75,7 @@ function Home() {
         <div className="mySlides">
           <img
             src="img/Vietnam_Danang_Furama_Resort_Exterior_Courtyard.jpg"
-            width='100%'
+            width="100%"
             height="600px"
             alt="..."
           />
