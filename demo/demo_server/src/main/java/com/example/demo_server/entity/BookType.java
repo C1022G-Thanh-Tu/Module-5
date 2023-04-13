@@ -1,22 +1,22 @@
 package com.example.demo_server.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-@Table(name = "product")
-public class Product {
+@Table(name = "book_type")
+public class BookType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "product_type_id")
-//    @JsonBackReference
-    private ProductType productType;
+    @OneToMany(mappedBy = "bookType")
+    @JsonManagedReference
+    private Set<Book> bookSet;
 
-    public Product() {
+    public BookType() {
     }
 
     public Integer getId() {
@@ -35,11 +35,11 @@ public class Product {
         this.name = name;
     }
 
-    public ProductType getProductType() {
-        return productType;
+    public Set<Book> getBookSet() {
+        return bookSet;
     }
 
-    public void setProductType(ProductType productType) {
-        this.productType = productType;
+    public void setBookSet(Set<Book> bookSet) {
+        this.bookSet = bookSet;
     }
 }

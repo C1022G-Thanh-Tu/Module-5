@@ -1,15 +1,13 @@
 package com.example.demo_server.DTO;
 
-import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
-public class ProductTypeDTO {
+public class BookTypeDTO {
     private Integer id;
-    @NotBlank(message = "Required")
     private String name;
-    private Set<ProductDTO> productDTOSet;
+    private Set<BookDTO> bookDTOSet;
 
-    public ProductTypeDTO() {
+    public BookTypeDTO() {
     }
 
     public Integer getId() {
@@ -28,11 +26,11 @@ public class ProductTypeDTO {
         this.name = name;
     }
 
-    public Set<ProductDTO> getProductDTOSet() {
-        return productDTOSet;
+    public Set<BookDTO> getBookDTOSet() {
+        return bookDTOSet;
     }
 
-    public void setProductDTOSet(Set<ProductDTO> productDTOSet) {
-        this.productDTOSet = productDTOSet;
+    public void setBookDTOSet(Set<BookDTO> bookDTOSet) {
+        this.bookDTOSet = bookDTOSet;
     }
 }
