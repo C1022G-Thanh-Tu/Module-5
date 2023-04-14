@@ -3,10 +3,10 @@ import userManagementService from '../../service/userManagementService'
 
 export const userListAction = () => async (dispatch) => {
     try {
-        const resposne = await userManagementService.findAll()
+        const response = await userManagementService.findAll()
         dispatch ({
             type: USER_LIST_ACTION,
-            payload: resposne.data
+            payload: response.data
         })
     } catch (error) {
         console.log(error);

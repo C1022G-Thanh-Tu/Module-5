@@ -2,7 +2,9 @@ package com.example.demo_server.service.impl;
 import com.example.demo_server.DTO.BookDTO;
 import com.example.demo_server.DTO.BookTypeDTO;
 import com.example.demo_server.entity.Book;
+import com.example.demo_server.entity.BookType;
 import com.example.demo_server.repository.IBookRepository;
+import com.example.demo_server.repository.IBookTypeRepository;
 import com.example.demo_server.service.IBookService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,12 @@ import java.util.List;
 public class BookService implements IBookService {
     @Autowired
     private IBookRepository bookRepository;
+    @Autowired
+    private IBookTypeRepository bookTypeRepository;
 
     @Override
-    public Page<BookDTO> findAll(String name, Pageable pageable) {
-        Page<Book> bookPage = bookRepository.findAllBooks(name,pageable);
+    public Page<BookDTO> findAll(String name, String bookTypeId ,Pageable pageable) {
+        Page<Book> bookPage = bookRepository.findAllBooks(name,bookTypeId,pageable);
         List<BookDTO> bookDTOList = new ArrayList<>();
         BookDTO bookDTO;
         for (Book book: bookPage) {
@@ -33,5 +37,22 @@ public class BookService implements IBookService {
             bookDTOList.add(bookDTO);
         }
         return new PageImpl<>(bookDTOList, pageable, bookPage.getTotalElements());
+    }
+
+    @Override
+    public void save(BookDTO bookDTO) {
+        Book book = new Book();
+        book.setBookType(bookTypeRepository.findTypeOfBookById(bookDTO.getBookTypeDTO().getId()));
+        BeanUtils.copyProperties(bookDTO, book);
+        bookRepository.addBook(book.getCode(),
+                book.getImportedDate(),
+                book.getName(),
+                book.getQuantity(),
+                book.getBookType().getId());
+    }
+
+    @Override
+    public void delete(Integer id) {
+        bookRepository.deleteBook(id);
     }
 }

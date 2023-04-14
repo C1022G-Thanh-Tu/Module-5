@@ -6,23 +6,23 @@ const findAll = () => {
 
 const findByName = (search) => {
   return request.get(`/customers?name_like=${search}`);
-}
+};
 
 const save = (customer) => {
-  request.post('/customers', {...customer})
-} 
+  request.post("/customers", { ...customer });
+};
 
 const remove = (id) => {
-  request.delete(`/customers/${id}`)
-}
+  return request.delete(`/customers/${id}`);
+};
 
 const findById = (id) => {
-  return request.get(`customers/${id}`)
-}
+  return request.get(`customers/${id}`);
+};
 
 const edit = (customer) => {
-  request.put(`/customers/${customer.id}`, {...customer})
-}
+  request.put(`/customers/${customer.id}`, { ...customer });
+};
 
 const customerService = {
   findAll,
@@ -30,8 +30,7 @@ const customerService = {
   remove,
   findById,
   edit,
-  findByName
+  findByName,
 };
-
 
 export default customerService;

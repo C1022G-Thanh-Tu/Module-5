@@ -13,11 +13,11 @@ const findByName = (search) => {
 };
 
 const findByType = (type) => {
-  return request.get(`/facilities?facilityTypeId_like=${type}`)
-}
+  return request.get(`/facilities?facilityTypeId_like=${type}`);
+};
 
 const remove = (id) => {
-  request.delete(`/facilities/${id}`);
+  return request.delete(`/facilities/${id}`);
 };
 
 const edit = (facility) => {
@@ -40,7 +40,7 @@ const facilityService = {
   findById,
   findByName,
   findLimit3,
-  findByType
+  findByType,
 };
 
 export default facilityService;

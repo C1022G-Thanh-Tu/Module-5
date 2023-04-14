@@ -5,5 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IBookService {
-    Page<BookDTO> findAll(String name, Pageable pageable);
+    Page<BookDTO> findAll(String name, String bookTypeId ,Pageable pageable);
+    void save(BookDTO bookDTO);
+    void delete (Integer id);
 }

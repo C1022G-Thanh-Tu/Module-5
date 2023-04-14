@@ -202,7 +202,10 @@ function CustomerList() {
                         className="btn btn-primary btn-sm edit"
                         to={`/customer-edit/${customer.id}`}
                       >
-                        <i className="fas fa-edit" style={{padding: '7px 3px'}}></i>
+                        <i
+                          className="fas fa-edit"
+                          style={{ padding: "7px 3px" }}
+                        ></i>
                       </Link>
                     </td>
                   </tr>
@@ -214,9 +217,7 @@ function CustomerList() {
             id={deletedId}
             name={deletedName}
             type={deletedType}
-            getList={() => {
-              getCustomerList();
-            }}
+            onCompletedDelete={getCustomerList}
           />
           <div className="d-grid">
             <ReactPaginate

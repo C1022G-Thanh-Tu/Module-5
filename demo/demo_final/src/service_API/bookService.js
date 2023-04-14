@@ -1,17 +1,29 @@
-import request from '../config/http'
+import request from "../config/http";
 
 const findAll = () => {
-    return request.get(`/books`)
+  return request.get(`/books`);
+};
+
+const findAllWithPageOrName = ({ page, name, type }) => {
+  return request.get(
+    `/books?page=${page ? page : 0}&name=${name}&bookTypeId=${type}`
+  );
+};
+
+const save = (book) => {
+  return request.post(`/books`, {...book})
 }
 
-const findAllWithPageOrName = (page, name) => {
-    console.log(page, name);
-    return request.get(`/books?page=${page ? page : 0}&name=${name}`)
+const remove = (id) => {
+  return request.delete(`/books/${id}`)
 }
 
 const bookService = {
-    findAll,
-    findAllWithPageOrName
-}
+  findAll,
+  findAllWithPageOrName,
+  save,
+  remove
+};
 
-export default bookService
+export default bookService;
+ 

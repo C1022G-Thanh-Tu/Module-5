@@ -1,6 +1,8 @@
 package com.example.demo_server.DTO;
 
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 public class BookDTO {
@@ -10,7 +12,9 @@ public class BookDTO {
     @Size(max = 100, message = "Tên sách không dài quá 100 ký tự")
     private String name;
     private String importedDate;
-    @Pattern(regexp = "^[1-9][\\\\d]*$", message = "Số lượng sách phải là số nguyên dương")
+//    @Pattern(regexp = "^[1-9][\\\\d]*$", message = "Số lượng sách phải là số nguyên dương")
+    @Positive(message = "Số lượng sách phải là số nguyên dương")
+    @Digits(fraction = 0, message = "Số lượng sách phải là số nguyên", integer = 10)
     private Integer quantity;
     private BookTypeDTO bookTypeDTO;
     public BookDTO() {

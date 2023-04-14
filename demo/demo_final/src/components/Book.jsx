@@ -6,29 +6,65 @@ import bookTypeService from "../service_API/bookTypeService";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { Form, Formik, Field } from "formik";
+import ModalDelete from "../util/ModalDelete";
+import { toast } from "react-toastify";
 
 function Book() {
   const [books, setBooks] = useState([]);
-  const [bookTypes, setBookTypes] = useState([]);  
-  const [pageCount, setPageCount] = useState(0);
-  const [numberPage, setNumberPage] = useState(0);
+  const [bookTypes, setBookTypes] = useState([]);
+  const [pageCount, setPageCount] = useState(1);
+  const [filters, setFilters] = useState({
+    page: 0,
+    name: "",
+    type: "",
+  });
+  const [deletedObject, setDeletedObject] = useState({
+    deletedId: "",
+    deletedName: "",
+  });
+
+  const handleTransferInfo = (deletedObject) => {
+    setDeletedObject((prev) => ({ ...prev, ...deletedObject }));
+  };
+
+  const handleDelete = async () => {
+    try {
+      await bookService.remove(deletedObject.deletedId);
+      toast("Xóa thành công");
+    } catch (error) {
+      console.log(error);
+      toast("Xóa thất bại");
+    }
+  };
+
+  const handlePageClick = (event) => {
+    setFilters((prev) => ({ ...prev, page: event.selected }));
+  };
 
   useEffect(() => {
-    getBooks();
+    const getBookTypes = async () => {
+      const bookTypesData = await bookTypeService.findAll();
+      setBookTypes(bookTypesData.data);
+    };
+
     getBookTypes();
-  }, [numberPage]);
-  const getBooks = async () => {
-    const booksData = await bookService.findAllWithPageOrName(numberPage, "");
-    setBooks(booksData.data.content);
-    setPageCount(booksData.data.totalPages)
-  };
-  const getBookTypes = async () => {
-    const bookTypesData = await bookTypeService.findAll();
-    setBookTypes(bookTypesData.data);
-  };
-  const handlePageClick = (event) => {
-    setNumberPage(event.selected);
-  }
+  }, []);
+
+  useEffect(() => {
+    const getBooks = async () => {
+      try {
+        const response = await bookService.findAllWithPageOrName(filters);
+
+        setBooks(response.data.content);
+        setPageCount(response.data.totalPages);
+      } catch (error) {
+        console.warn(error);
+      }
+    };
+
+    getBooks();
+  }, [filters]);
+
   return (
     <>
       <Link to="/create" className="btn btn-success mb-3">
@@ -37,33 +73,31 @@ function Book() {
 
       <Formik
         initialValues={{
-          name: ""
+          name: filters.name,
+          type: filters.type,
         }}
-        onSubmit={async (values) => {
-          try {
-            const searchResult = await bookService.findAllWithPageOrName(
-              numberPage,
-              values.name
-            );
-            console.log(searchResult.data.content);
-            setBooks(searchResult.data.content);
-            let error = document.getElementById("error")
-            if (searchResult.data.length === 0) {
-                error.style.display = 'block'
-            } else {
-                error.style.display = 'none'
-            }
-          } catch (error) {
-            console.log(error);
-          }
+        onSubmit={(values) => {
+          setFilters((prev) => {
+            return { ...prev, ...values, page: 1 };
+          });
         }}
       >
         <Form>
           <Field name="name" style={{ height: "34px" }} />
+          <Field as="select" style={{ height: "34px" }} name="type">
+            <option value="">--- Hãy chọn thể loại ---</option>
+            {bookTypes.map((type) => (
+              <option key={type.id} value={type.id}>
+                {type.name}
+              </option>
+            ))}
+          </Field>
           <button type="submit" className="btn btn-secondary me-3">
             Tìm kiếm
           </button>
-          <div id="error" className="text-danger" style={{display: 'none'}}>Không tìm thấy sách</div>
+          <div id="error" className="text-danger" style={{ display: "none" }}>
+            Không tìm thấy sách
+          </div>
         </Form>
       </Formik>
 
@@ -76,6 +110,7 @@ function Book() {
             <th scope="col">Thể loại</th>
             <th scope="col">Ngày nhập sách</th>
             <th scope="col">Số lượng</th>
+            <th scope="col">Chức năng</th>
           </tr>
         </thead>
         <tbody>
@@ -92,25 +127,46 @@ function Book() {
               </td>
               <td>{book.importedDate}</td>
               <td>{book.quantity}</td>
+              <td>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  onClick={() =>
+                    handleTransferInfo({
+                      deletedId: book.id,
+                      deletedName: book.name,
+                    })
+                  }
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      <ModalDelete
+        deletedId={deletedObject.deletedId}
+        deletedName={deletedObject.deletedName}
+        onCompletedDelete={handleDelete}
+      />
 
       <div className="d-grid">
         <ReactPaginate
           breakLabel="..."
           nextLabel=">"
           onPageChange={handlePageClick}
-          // pageRangeDisplayed={3}
           pageCount={pageCount}
           previousLabel="< "
-          // renderOnZeroPageCount={null}
           containerClassName="pagination"
           pageLinkClassName="page-num"
-          nextLinkClassName="page-previous"
-          previousLinkClassName="page-next"
+          nextLinkClassName="page-next"
+          previousLinkClassName="page-previous"
           activeClassName="active"
+          disabledClassName="d-none"
         />
       </div>
     </>
