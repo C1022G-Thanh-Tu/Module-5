@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 function Book() {
   const [books, setBooks] = useState([]);
   const [bookTypes, setBookTypes] = useState([]);
-  const [pageCount, setPageCount] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
   const [filters, setFilters] = useState({
     page: 0,
     name: "",
@@ -80,7 +80,7 @@ function Book() {
         }}
         onSubmit={(values) => {
           setFilters((prev) => {
-            return { ...prev, ...values, page: 1 };
+            return { ...prev, ...values, page: 0 };
           });
         }}
       >

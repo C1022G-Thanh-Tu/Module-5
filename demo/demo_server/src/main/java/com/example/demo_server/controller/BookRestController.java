@@ -30,7 +30,7 @@ public class BookRestController {
     private IBookService bookService;
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public Page<BookDTO> getAllBooks (@PageableDefault(size = 3, page = 1)Pageable pageable,
+    public Page<BookDTO> getAllBooks (@PageableDefault(size = 3)Pageable pageable,
                                       @RequestParam(required = false, defaultValue = "") String name,
                                       @RequestParam(required = false, defaultValue = "") String bookTypeId) {
 
