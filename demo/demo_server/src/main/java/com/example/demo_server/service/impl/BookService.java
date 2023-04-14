@@ -55,4 +55,27 @@ public class BookService implements IBookService {
     public void delete(Integer id) {
         bookRepository.deleteBook(id);
     }
+
+    @Override
+    public BookDTO findById(Integer id) {
+        Book book = bookRepository.findBookWithId(id);
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setBookTypeDTO(new BookTypeDTO());
+        BeanUtils.copyProperties(book.getBookType(), bookDTO.getBookTypeDTO());
+        BeanUtils.copyProperties(book, bookDTO);
+        return bookDTO;
+    }
+
+    @Override
+    public void update(BookDTO bookDTO) {
+        Book book = new Book();
+        book.setBookType(bookTypeRepository.findTypeOfBookById(bookDTO.getBookTypeDTO().getId()));
+        BeanUtils.copyProperties(bookDTO, book);
+        bookRepository.updateBook(book.getCode(),
+                book.getImportedDate(),
+                book.getName(),
+                book.getQuantity(),
+                book.getBookType().getId(),
+                book.getId());
+    }
 }

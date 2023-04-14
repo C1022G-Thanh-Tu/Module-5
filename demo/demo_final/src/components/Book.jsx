@@ -30,9 +30,11 @@ function Book() {
   const handleDelete = async () => {
     try {
       await bookService.remove(deletedObject.deletedId);
+      const newFilters = {...filters}
+      setFilters(newFilters)
       toast("Xóa thành công");
     } catch (error) {
-      console.log(error);
+      console.warn(error);
       toast("Xóa thất bại");
     }
   };
@@ -128,6 +130,9 @@ function Book() {
               <td>{book.importedDate}</td>
               <td>{book.quantity}</td>
               <td>
+                <Link to={`/edit/${book.id}`} className="btn btn-primary me-3" >
+                  Sửa
+                </Link>
                 <button
                   type="button"
                   className="btn btn-danger"

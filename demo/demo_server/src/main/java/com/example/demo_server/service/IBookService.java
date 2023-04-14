@@ -8,4 +8,6 @@ public interface IBookService {
     Page<BookDTO> findAll(String name, String bookTypeId ,Pageable pageable);
     void save(BookDTO bookDTO);
     void delete (Integer id);
+    BookDTO findById(Integer id);
+    void update(BookDTO bookDTO);
 }

@@ -74,4 +74,27 @@ public class BookRestController {
     public void deleteBook(@PathVariable Integer id) {
         bookService.delete(id);
     }
+
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public BookDTO getBookDetail(@PathVariable Integer id) {
+        return bookService.findById(id);
+    }
+
+    @PutMapping("")
+    public ResponseEntity<?> updateBook (@Validated @RequestBody BookDTO bookDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            bookService.update(bookDTO);
+        } else {
+            Map<String, String> map = new LinkedHashMap<>();
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            for (FieldError error : errors) {
+                if (!map.containsKey(error.getField())) {
+                    map.put(error.getField(), error.getDefaultMessage());
+                }
+            }
+            return new ResponseEntity<>(map,  HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

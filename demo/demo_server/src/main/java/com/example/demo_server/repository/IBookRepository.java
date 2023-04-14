@@ -28,4 +28,17 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
     @Transactional
     @Query(value = "delete from book where id = :id", nativeQuery = true)
     void deleteBook(@Param("id") Integer id);
+
+    @Query(value = "select * from book where id = :id", nativeQuery = true)
+    Book findBookWithId(@Param("id") Integer id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update book set code = :code, name = :name, imported_date = :importedDate, quantity = :quantity, book_type_id = :bookTypeId where id = :id", nativeQuery = true)
+    void updateBook(@Param("code") String code,
+                    @Param("importedDate") String importedDate,
+                    @Param("name") String name,
+                    @Param("quantity") Integer quantity,
+                    @Param("bookTypeId") Integer bookTypeId,
+                    @Param("id") Integer id);
 }

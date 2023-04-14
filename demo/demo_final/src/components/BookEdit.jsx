@@ -4,30 +4,47 @@ import * as Yup from "yup";
 import { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import bookService from "../service_API/bookService";
 import bookTypeService from "../service_API/bookTypeService";
 
-function BookCreate() {
+function BookEdit() {
+  let param = useParams();
   let navigate = useNavigate();
   const [bookTypes, setBookTypes] = useState([]);
+  const [book, setBook] = useState()
+
+  useEffect(() => {
+    const getBookDetail = async () => {
+      const bookResponse = await bookService.findById(param.id)
+      setBook(bookResponse.data)
+    }
+    getBookDetail()
+  }, [param.id])
+
   useEffect(() => {
     const getBookTypes = async () => {
-      const bookTypesResponse= await bookTypeService.findAll();
+      const bookTypesResponse = await bookTypeService.findAll();
       setBookTypes(bookTypesResponse.data);
     };
     getBookTypes();
   }, []);
+
+  if (!book) {
+    return null
+  }
+
   return (
     <>
-      <h1 className="mb-3 text-center">Tạo mới sách</h1>
+      <h1 className="mb-3 text-center">Chỉnh sửa thông tin sách sách</h1>
       <Formik
         initialValues={{
-          code: "",
-          name: "",
-          bookTypeDTO: "",
-          importedDate: "",
-          quantity: "",
+          id: book?.id,
+          code: book?.code,
+          name: book?.name,
+          bookTypeDTO: book?.bookTypeDTO.id,
+          importedDate: book?.importedDate,
+          quantity: book?.quantity,
         }}
         validationSchema={Yup.object({
           code: Yup.string()
@@ -46,12 +63,12 @@ function BookCreate() {
             bookTypeDTO: { id: +values.bookTypeDTO },
           };
           try {
-            await bookService.save(newValues);
-            toast("Thêm mới thành công");
+            await bookService.update(newValues);
+            toast("Sửa thông tin thành công");
             navigate("/");
           } catch (error) {
             console.log(error);
-            toast("Thêm mới thất bại");
+            toast("Sửa thông tin thất bại");
           }
         }}
       >
@@ -126,7 +143,7 @@ function BookCreate() {
             />
           </div>
           <button type="submit" className="btn btn-success me-3">
-            Tạo mới
+            Sửa
           </button>
           <Link to="/" className="btn btn-primary">
             Thoát
@@ -137,4 +154,4 @@ function BookCreate() {
   );
 }
 
-export default BookCreate;
+export default BookEdit;

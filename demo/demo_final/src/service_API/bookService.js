@@ -18,11 +18,21 @@ const remove = (id) => {
   return request.delete(`/books/${id}`)
 }
 
+const findById = (id) => {
+  return request.get(`/books/${id}`)
+}
+
+const update = (book) => {
+  return request.put(`/books`, {...book})
+}
+
 const bookService = {
   findAll,
   findAllWithPageOrName,
   save,
-  remove
+  remove,
+  findById,
+  update
 };
 
 export default bookService;
