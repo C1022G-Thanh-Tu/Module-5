@@ -154,7 +154,6 @@ function Book() {
       </table>
 
       <ModalDelete
-        deletedId={deletedObject.deletedId}
         deletedName={deletedObject.deletedName}
         onCompletedDelete={handleDelete}
       />

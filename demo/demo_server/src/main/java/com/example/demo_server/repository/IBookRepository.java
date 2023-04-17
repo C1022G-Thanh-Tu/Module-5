@@ -1,5 +1,4 @@
 package com.example.demo_server.repository;
-
 import com.example.demo_server.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +33,8 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "update book set code = :code, name = :name, imported_date = :importedDate, quantity = :quantity, book_type_id = :bookTypeId where id = :id", nativeQuery = true)
+    @Query(value = "update book set code = :code, name = :name, imported_date = :importedDate, " +
+            "quantity = :quantity, book_type_id = :bookTypeId where id = :id", nativeQuery = true)
     void updateBook(@Param("code") String code,
                     @Param("importedDate") String importedDate,
                     @Param("name") String name,

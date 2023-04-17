@@ -2,18 +2,15 @@ package com.example.demo_server.service.impl;
 import com.example.demo_server.DTO.BookDTO;
 import com.example.demo_server.DTO.BookTypeDTO;
 import com.example.demo_server.entity.Book;
-import com.example.demo_server.entity.BookType;
 import com.example.demo_server.repository.IBookRepository;
 import com.example.demo_server.repository.IBookTypeRepository;
 import com.example.demo_server.service.IBookService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
