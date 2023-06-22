@@ -6,9 +6,8 @@ import com.example.demo_server.service.IBookTypeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookTypeService implements IBookTypeService {
@@ -18,13 +17,10 @@ public class BookTypeService implements IBookTypeService {
     @Override
     public List<BookTypeDTO> findAll() {
         List<BookType> bookTypeList = bookTypeRepository.findAllBookTypes();
-        List<BookTypeDTO> bookTypeDTOList = new ArrayList<>();
-        BookTypeDTO bookTypeDTO;
-        for (BookType bookType: bookTypeList) {
-            bookTypeDTO = new BookTypeDTO();
+        return bookTypeList.stream().map(bookType -> {
+            BookTypeDTO bookTypeDTO = new BookTypeDTO();
             BeanUtils.copyProperties(bookType, bookTypeDTO);
-            bookTypeDTOList.add(bookTypeDTO);
-        }
-        return bookTypeDTOList;
+            return bookTypeDTO;
+        }).collect(Collectors.toList());
     }
 }

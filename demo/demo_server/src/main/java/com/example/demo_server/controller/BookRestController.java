@@ -24,35 +24,8 @@ import java.util.Map;
 public class BookRestController {
     @Autowired
     private IBookService bookService;
-    @GetMapping("")
-    @ResponseStatus(HttpStatus.OK)
-    public Page<BookDTO> getAllBooks (@PageableDefault(size = 3)Pageable pageable,
-                                      @RequestParam(required = false, defaultValue = "") String name,
-                                      @RequestParam(required = false, defaultValue = "") String bookTypeId) {
-
-        Page<BookDTO> bookPage = bookService.findAll(name, bookTypeId, pageable);
-        for (BookDTO book : bookPage.getContent()) {
-            SimpleDateFormat initialDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            SimpleDateFormat newDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String importedDate = book.getImportedDate();
-            String importedDateInNewFormat = "";
-            try {
-                Date date = initialDateFormat.parse(importedDate);
-                importedDateInNewFormat = newDateFormat.format(date);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            book.setImportedDate(importedDateInNewFormat);
-        }
-
-        return bookPage;
-    }
-
-    @PostMapping("")
-    public ResponseEntity<?> saveBook (@Validated @RequestBody BookDTO bookDTO, BindingResult bindingResult) {
-        if (!bindingResult.hasErrors()) {
-            bookService.save(bookDTO);
-        } else {
+    public ResponseEntity<?> handleValidationErrors(BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             Map<String, String> map = new LinkedHashMap<>();
             List<FieldError> errors = bindingResult.getFieldErrors();
             for (FieldError error : errors) {
@@ -60,7 +33,25 @@ public class BookRestController {
                     map.put(error.getField(), error.getDefaultMessage());
                 }
             }
-            return new ResponseEntity<>(map,  HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<BookDTO> getAllBooks (@PageableDefault(size = 3)Pageable pageable,
+                                      @RequestParam(required = false, defaultValue = "") String name,
+                                      @RequestParam(required = false, defaultValue = "") String bookTypeId) {
+
+        return bookService.findAll(name, bookTypeId, pageable);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> saveBook (@Validated @RequestBody BookDTO bookDTO, BindingResult bindingResult) {
+        if (!bindingResult.hasErrors()) {
+            bookService.save(bookDTO);
+        } else {
+            return handleValidationErrors(bindingResult);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -82,14 +73,7 @@ public class BookRestController {
         if (!bindingResult.hasErrors()) {
             bookService.update(bookDTO);
         } else {
-            Map<String, String> map = new LinkedHashMap<>();
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                if (!map.containsKey(error.getField())) {
-                    map.put(error.getField(), error.getDefaultMessage());
-                }
-            }
-            return new ResponseEntity<>(map,  HttpStatus.BAD_REQUEST);
+            return handleValidationErrors(bindingResult);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

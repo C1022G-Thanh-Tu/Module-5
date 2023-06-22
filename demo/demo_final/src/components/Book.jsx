@@ -56,7 +56,6 @@ function Book() {
     const getBooks = async () => {
       try {
         const response = await bookService.findAllWithPageOrName(filters);
-
         setBooks(response.data.content);
         setPageCount(response.data.totalPages);
       } catch (error) {
