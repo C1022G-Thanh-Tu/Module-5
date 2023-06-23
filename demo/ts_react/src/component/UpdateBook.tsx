@@ -132,7 +132,7 @@ function UpdateBook() {
               id="bookTypeDTO"
               name="bookTypeDTO"
             >
-              <option value={0}>--- Hãy chọn thể loại sách ---</option>
+              <option style={{textAlign: 'center'}} value={0}>--- Hãy chọn thể loại sách ---</option>
               {bookTypes.map((type) => (
                 <option key={type.id} value={type.id}>
                   {type.name}
